@@ -15,42 +15,66 @@ interface NavbarProps {
   user?: User | null;
 }
 
+import { useNavigate, useLocation } from 'react-router-dom';
+
 const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch, user }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
 
+    // Handle generic links or #
+    if (href === '#' || href === '/') {
+      if (location.pathname !== '/') {
+        navigate('/');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    // Handle Anchor Links (#section)
+    if (href.startsWith('#')) {
+      const scrollToElement = () => {
+        const element = document.querySelector(href);
+        if (element) {
+          const offset = 90;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      };
+
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for home page to mount
+        setTimeout(scrollToElement, 500);
+      } else {
+        scrollToElement();
+      }
+      return;
+    }
+
+    // Handle Routes (/path)
     if (href.startsWith('/')) {
-      // Allow navigation to other pages
-      window.location.href = href;
+      // If href is /#library (legacy fix), treat as #library
+      if (href.startsWith('/#')) {
+        const hash = href.substring(1);
+        handleNavClick(e, hash);
+        return;
+      }
+      navigate(href);
       return;
-    }
-
-    if (href === '#contact') {
-      onContact?.();
-      return;
-    }
-
-    if (href === '#') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 90;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
     }
   };
 

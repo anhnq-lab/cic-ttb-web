@@ -27,7 +27,7 @@ interface User {
   email: string;
 }
 
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import AdminDashboard from './components/AdminDashboard';
 import NewsDetail from './components/NewsDetail';
 import EDTCorePage from './pages/EDTCorePage';

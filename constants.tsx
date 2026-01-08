@@ -4,7 +4,7 @@ import { NavItem, NewsItem, RoleCard, Testimonial, ProductFeature, PricingPlan, 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Trang chủ', href: '/' },
   { label: 'Dự án', href: '#portfolio' },
-  { label: 'Thư viện', href: '/#library' },
+  { label: 'Thư viện', href: '#library' },
   { label: 'Công cụ', href: '#tools' },
   { label: 'Giải pháp & Bảng giá', href: '#products' },
   { label: 'Tin tức', href: '#news' },
