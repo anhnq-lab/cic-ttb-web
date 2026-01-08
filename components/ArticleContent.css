@@ -1,0 +1,80 @@
+/* ArticleContent.css */
+.article-content {
+    font-family: 'Merriweather', serif; /* Or any good serif font for reading */
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.8;
+    color: #2d3748;
+}
+
+.article-content p {
+    margin-bottom: 1.5em;
+}
+
+.article-content h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    color: #1a202c;
+}
+
+.article-content h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    color: #2d3748;
+}
+
+.article-content ul, .article-content ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+}
+
+.article-content ul {
+    list-style-type: disc;
+}
+
+.article-content ol {
+    list-style-type: decimal;
+}
+
+.article-content li {
+    margin-bottom: 0.5em;
+}
+
+.article-content blockquote {
+    border-left: 4px solid #3182ce; /* brand-blue */
+    padding-left: 1em;
+    margin: 1.5em 0;
+    font-style: italic;
+    color: #4a5568;
+    background-color: #ebf8ff;
+    padding: 1em 1em 1em 1.5em;
+    border-radius: 0 0.5em 0.5em 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5em;
+    margin: 1.5em 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.article-content a {
+    color: #3182ce;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.article-content a:hover {
+    color: #2c5282;
+}
+
+.article-content strong {
+    font-weight: 700;
+    color: #1a202c;
+}
