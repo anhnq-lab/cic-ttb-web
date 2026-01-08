@@ -16,11 +16,33 @@ const isProduction = process.env.NODE_ENV === 'production';
 app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' })); // Increase limit for base64 images
 
+const fs = require('fs');
+
 // Serve static frontend files in production
 if (isProduction) {
     const distPath = path.join(__dirname, '../dist');
-    app.use(express.static(distPath));
-    console.log(`Serving static files from: ${distPath} `);
+
+    // Check if dist exists before serving
+    if (fs.existsSync(distPath)) {
+        app.use(express.static(distPath));
+        console.log(`Serving static files from: ${distPath} `);
+
+        // SPA Fallback
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(distPath, 'index.html'));
+        });
+    } else {
+        console.log('Dist folder not found, running in API-only mode');
+        app.get('/', (req, res) => {
+            res.send(`
+                <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+                    <h1 style="color: #0066cc;">CIC BIM Hub API is Running!</h1>
+                    <p>Hệ thống Backend đang hoạt động tốt.</p>
+                    <p>Vui lòng truy cập giao diện chính tại: <a href="https://anhnq-lab.github.io/cic-ttb-web/">anhnq-lab.github.io/cic-ttb-web</a></p>
+                </div>
+            `);
+        });
+    }
 }
 
 // Initialize Gemini

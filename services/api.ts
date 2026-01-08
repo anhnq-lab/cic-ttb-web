@@ -1,10 +1,12 @@
 // API Service for BIM Hub Website - Production Ready
 // Automatically detects environment and uses real backend or localStorage fallback
 
-const API_BASE_URL = '/api'; // Use local proxy defined in vite.config.ts
 // Use Mock API if on GitHub Pages (static site) or explicitly set
 const isGitHubPages = window.location.hostname.includes('github.io');
-const USE_REAL_API = !isGitHubPages; // Default to Real API unless on GitHub Pages
+const RENDER_API_URL = 'https://cic-ttb-web.onrender.com/api';
+
+const API_BASE_URL = isGitHubPages ? RENDER_API_URL : '/api';
+const USE_REAL_API = true; // Always attempt to use real API now that we have Render
 
 // Helper for localStorage (development fallback)
 const getData = (key: string, defaultValue: any) => {
