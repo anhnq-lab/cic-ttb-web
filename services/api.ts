@@ -2,7 +2,9 @@
 // Automatically detects environment and uses real backend or localStorage fallback
 
 const API_BASE_URL = '/api'; // Use local proxy defined in vite.config.ts
-const USE_REAL_API = true; // Default to Real API for full functionality
+// Use Mock API if on GitHub Pages (static site) or explicitly set
+const isGitHubPages = window.location.hostname.includes('github.io');
+const USE_REAL_API = !isGitHubPages; // Default to Real API unless on GitHub Pages
 
 // Helper for localStorage (development fallback)
 const getData = (key: string, defaultValue: any) => {
