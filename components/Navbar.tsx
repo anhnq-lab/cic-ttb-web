@@ -96,7 +96,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
                 <span className="text-gray-400">-</span>
                 <span className="text-brand-orange">DIGITAL TWIN</span>
               </span>
-              <span className="text-[10px] text-gray-500 font-medium italic tracking-wide hidden md:block">Digitaltwin: Chia sẻ - Kết nối - Kiến tạo tương lai</span>
+              <span className="text-[11px] text-gray-600 font-bold italic tracking-wide hidden md:block">Chia sẻ - Kết nối - Kiến tạo tương lai</span>
               <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider md:hidden">Cổng thông tin Pháp lý</span>
             </div>
           </a>
