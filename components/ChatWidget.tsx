@@ -7,10 +7,23 @@ interface ChatWidgetProps {
   externalTrigger?: { message: string; timestamp: number } | null;
 }
 
-// Simple Bot Icon for ChatWidget (Not the complex 3D one)
+// Premium 3D Bot Icon for ChatWidget (Matching ToolsSection)
 const SimpleBotIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 4C13.66 4 15 5.34 15 7C15 8.66 13.66 10 12 10C10.34 10 9 8.66 9 7C9 5.34 10.34 4 12 4ZM12 20C9.33 20 7 18 7 15.5C7 15.22 7.22 15 7.5 15H16.5C16.78 15 17 15.22 17 15.5C17 18 14.67 20 12 20ZM7 11V13H5V11H7ZM19 11V13H17V11H19Z" fill="currentColor" />
+  <svg viewBox="0 0 200 200" fill="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="chatHoloGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2563EB" />
+        <stop offset="100%" stopColor="#06B6D4" />
+      </linearGradient>
+    </defs>
+    <g className="animate-spin-slow" style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
+      <circle cx="100" cy="100" r="85" stroke="url(#chatHoloGrad)" strokeWidth="10" opacity="0.3" strokeDasharray="20 20" />
+    </g>
+    <circle cx="100" cy="100" r="45" fill="url(#chatHoloGrad)" opacity="0.2" />
+    <path d="M100 65 L125 85 L115 115 L85 115 L75 85 Z" fill="none" stroke="currentColor" strokeWidth="8" opacity="0.9" />
+    <circle cx="100" cy="100" r="15" fill="currentColor">
+      <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+    </circle>
   </svg>
 );
 
@@ -60,7 +73,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ externalTrigger }) => {
 
     try {
       const streamResponse = await sendMessageToGemini(userMessage.text);
-      
+
       const botMessageId = (Date.now() + 1).toString();
       setMessages(prev => [...prev, {
         id: botMessageId,
@@ -74,7 +87,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ externalTrigger }) => {
         const c = chunk as GenerateContentResponse;
         if (c.text) {
           fullText += c.text;
-          setMessages(prev => prev.map(msg => 
+          setMessages(prev => prev.map(msg =>
             msg.id === botMessageId ? { ...msg, text: fullText } : msg
           ));
         }
@@ -108,7 +121,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ externalTrigger }) => {
           <div className="bg-brand-blue p-4 flex items-center justify-between shadow-sm">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white p-1">
-                 <SimpleBotIcon />
+                <SimpleBotIcon />
               </div>
               <div>
                 <h3 className="font-bold text-white text-sm">Hỗ trợ CIC</h3>
@@ -134,29 +147,28 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ externalTrigger }) => {
                     <SimpleBotIcon />
                   </div>
                 )}
-                <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
-                  msg.role === 'user' 
-                    ? 'bg-brand-orange text-white rounded-br-none' 
+                <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${msg.role === 'user'
+                    ? 'bg-brand-orange text-white rounded-br-none'
                     : 'bg-white border border-gray-100 text-gray-800 rounded-bl-none'
-                }`}>
+                  }`}>
                   <div className="whitespace-pre-wrap markdown-body">{msg.text}</div>
                 </div>
               </div>
             ))}
-             {isLoading && (
-               <div className="flex justify-start">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 text-brand-blue border border-blue-200 flex-shrink-0 flex items-center justify-center mr-2 mt-1 shadow-sm p-1.5">
-                    <SimpleBotIcon />
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="w-8 h-8 rounded-full bg-blue-100 text-brand-blue border border-blue-200 flex-shrink-0 flex items-center justify-center mr-2 mt-1 shadow-sm p-1.5">
+                  <SimpleBotIcon />
+                </div>
+                <div className="bg-white border border-gray-100 px-4 py-3 rounded-2xl rounded-bl-none shadow-sm">
+                  <div className="flex space-x-1.5">
+                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-75"></div>
+                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></div>
                   </div>
-                  <div className="bg-white border border-gray-100 px-4 py-3 rounded-2xl rounded-bl-none shadow-sm">
-                    <div className="flex space-x-1.5">
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-75"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></div>
-                    </div>
-                  </div>
-               </div>
-             )}
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
@@ -171,7 +183,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ externalTrigger }) => {
                 placeholder="Hỏi CIC về pháp lý BIM..."
                 className="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all text-sm"
               />
-              <button 
+              <button
                 onClick={() => handleSendMessage(input)}
                 disabled={!input.trim() || isLoading}
                 className="absolute right-1.5 w-9 h-9 bg-brand-blue text-white rounded-full flex items-center justify-center hover:bg-blue-700 disabled:opacity-50 transition-all shadow-sm"

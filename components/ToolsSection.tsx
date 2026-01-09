@@ -35,76 +35,63 @@ export const CICLogo: React.FC<{ className?: string }> = ({ className = "w-full 
   </svg>
 );
 
-// 2. ROBOT AVATAR - MODERN GLASSMORPHISM AI
-// Floating head, glowing eyes, sleek design
+// 2. ROBOT AVATAR - PREMIUM 3D TECH NODE
+// Holographic, Glassmorphism, Sophisticated
 export const RobotAvatar: React.FC<{ className?: string }> = ({ className = "w-full h-full" }) => (
-  <svg viewBox="0 0 200 200" className={className} xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 200 200" className={className} xmlns="http://www.w3.org/2000/svg" fill="none">
     <defs>
-      <linearGradient id="robotBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#F3F4F6" />
-        <stop offset="100%" stopColor="#E5E7EB" />
+      <linearGradient id="holoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2563EB" />
+        <stop offset="50%" stopColor="#3B82F6" />
+        <stop offset="100%" stopColor="#06B6D4" />
       </linearGradient>
-      <linearGradient id="robotFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#1F2937" />
-        <stop offset="100%" stopColor="#111827" />
+      <linearGradient id="glassGradient" x1="10%" y1="10%" x2="90%" y2="90%">
+        <stop offset="0%" stopColor="white" stopOpacity="0.4" />
+        <stop offset="100%" stopColor="white" stopOpacity="0.1" />
       </linearGradient>
-      <filter id="glowBlue" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-        <feMerge>
-          <feMergeNode in="coloredBlur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
+      <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
       </filter>
     </defs>
 
-    {/* Outer Floating Ring (Halo) */}
-    <circle cx="100" cy="100" r="90" stroke="#E0F2FE" strokeWidth="1" fill="none" opacity="0.5">
-      <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
+    {/* Orbiting Rings - High Tech */}
+    <g className="animate-spin-slow" style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
+      <circle cx="100" cy="100" r="85" stroke="url(#holoGradient)" strokeWidth="1" opacity="0.3" strokeDasharray="10 10" />
+      <circle cx="100" cy="100" r="70" stroke="#06B6D4" strokeWidth="0.5" opacity="0.2" />
+    </g>
+
+    {/* Central Core - The Brain */}
+    <g filter="url(#glowEffect)">
+      {/* Background Sphere */}
+      <circle cx="100" cy="100" r="45" fill="url(#holoGradient)" opacity="0.1" />
+
+      {/* Neural Network Nodes */}
+      <path d="M100 65 L125 85 L115 115 L85 115 L75 85 Z" fill="none" stroke="url(#holoGradient)" strokeWidth="1.5" opacity="0.8">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite" />
+      </path>
+
+      {/* Connecting Lines */}
+      <line x1="100" y1="65" x2="100" y2="100" stroke="white" strokeWidth="1.5" opacity="0.6" />
+      <line x1="125" y1="85" x2="100" y2="100" stroke="white" strokeWidth="1.5" opacity="0.6" />
+      <line x1="115" y1="115" x2="100" y2="100" stroke="white" strokeWidth="1.5" opacity="0.6" />
+      <line x1="85" y1="115" x2="100" y2="100" stroke="white" strokeWidth="1.5" opacity="0.6" />
+      <line x1="75" y1="85" x2="100" y2="100" stroke="white" strokeWidth="1.5" opacity="0.6" />
+
+      {/* Center Core Pulse */}
+      <circle cx="100" cy="100" r="8" fill="white">
+        <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    {/* Floating Particles */}
+    <circle cx="140" cy="60" r="3" fill="#06B6D4">
+      <animate attributeName="cy" values="60;55;60" dur="2s" repeatCount="indefinite" />
     </circle>
-    <path d="M100 10 A90 90 0 0 1 190 100" stroke="#3B82F6" strokeWidth="2" fill="none" strokeLinecap="round">
-      <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="3s" repeatCount="indefinite" />
-    </path>
-
-    {/* Main Head Shape (Squircle) */}
-    <rect x="40" y="40" width="120" height="120" rx="35" fill="url(#robotBodyGrad)" stroke="white" strokeWidth="2" />
-
-    {/* Face Screen (Black Glass) */}
-    <rect x="55" y="65" width="90" height="70" rx="15" fill="url(#robotFaceGrad)" stroke="#374151" strokeWidth="1" />
-
-    {/* Eyes - Glowing Digital Pills */}
-    <g filter="url(#glowBlue)">
-      {/* Left Eye */}
-      <ellipse cx="80" cy="95" rx="10" ry="14" fill="#60A5FA" opacity="0.9">
-        <animate attributeName="ry" values="14;2;14" dur="3s" repeatCount="indefinite" begin="0s" />
-      </ellipse>
-      {/* Right Eye */}
-      <ellipse cx="120" cy="95" rx="10" ry="14" fill="#60A5FA" opacity="0.9">
-        <animate attributeName="ry" values="14;2;14" dur="3s" repeatCount="indefinite" begin="0.2s" />
-      </ellipse>
-    </g>
-
-    {/* Digital Mouth / Audio Visualizer */}
-    <g transform="translate(100, 118)">
-      <rect x="-12" y="0" width="3" height="3" rx="1" fill="#3B82F6">
-        <animate attributeName="height" values="3;10;3" dur="1s" repeatCount="indefinite" />
-        <animate attributeName="y" values="0;-3.5;0" dur="1s" repeatCount="indefinite" />
-      </rect>
-      <rect x="-4" y="0" width="3" height="6" rx="1" fill="#3B82F6">
-        <animate attributeName="height" values="6;14;6" dur="0.8s" repeatCount="indefinite" />
-        <animate attributeName="y" values="0;-4;0" dur="0.8s" repeatCount="indefinite" />
-      </rect>
-      <rect x="4" y="0" width="3" height="6" rx="1" fill="#3B82F6">
-        <animate attributeName="height" values="6;14;6" dur="1.2s" repeatCount="indefinite" />
-        <animate attributeName="y" values="0;-4;0" dur="1.2s" repeatCount="indefinite" />
-      </rect>
-      <rect x="12" y="0" width="3" height="3" rx="1" fill="#3B82F6">
-        <animate attributeName="height" values="3;10;3" dur="0.9s" repeatCount="indefinite" />
-        <animate attributeName="y" values="0;-3.5;0" dur="0.9s" repeatCount="indefinite" />
-      </rect>
-    </g>
-
-    {/* Reflections (Glossy look) */}
-    <path d="M50 50 Q100 45 150 50" stroke="white" strokeWidth="2" strokeOpacity="0.5" fill="none" />
+    <circle cx="60" cy="140" r="2" fill="#3B82F6">
+      <animate attributeName="cy" values="140;145;140" dur="2.5s" repeatCount="indefinite" />
+    </circle>
   </svg>
 );
 
