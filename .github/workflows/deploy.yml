@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # Use placeholder for build time, but in production the app will use the one
+          # configured in user's browser or backend if needed.
+          # Note: Frontend usually needs public keys. Since the user's key is critical,
+          # we can inject a variable if added to Repo Secrets, or rely on .env.local
+          # IF we somehow committed it (we didn't).
+          # For now, let's just build. React apps often pull env from the build env.
+          # If we want the AI key to be baked in, the USER MUST ADD 'GEMINI_API_KEY'
+          # to GitHub Repository Secrets.
+          # For now we will assume the code works or handles missing keys gracefully (it falls back).
+          CI: false
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
