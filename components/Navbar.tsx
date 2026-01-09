@@ -90,11 +90,9 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo - Simple & Professional */}
           <a href="#" onClick={(e) => handleNavClick(e, '#')} className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-brand-blue rounded-lg flex items-center justify-center text-white shadow-md group-hover:bg-blue-700 transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-            </div>
+            <img src="/cic-ttb-web/cic-logo.png" alt="CIC Logo" className="h-10 w-auto object-contain" />
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-gray-900 leading-none tracking-tight">BIM & Digital Twin <span className="text-brand-blue">VN</span></span>
+              <span className="text-lg font-bold text-gray-900 leading-none tracking-tight">CIC-Digital Twin</span>
               <span className="text-[10px] text-gray-500 font-medium italic tracking-wide hidden md:block">Digitaltwin: Chia sẻ - Kết nối - Kiến tạo tương lai</span>
               <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider md:hidden">Cổng thông tin Pháp lý</span>
             </div>

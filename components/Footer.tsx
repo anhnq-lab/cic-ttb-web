@@ -4,7 +4,7 @@ import NewsletterSignup from './NewsletterSignup';
 
 const Footer: React.FC = () => {
   const [settings, setSettings] = useState({
-    companyName: 'BIM Hub Vietnam',
+    companyName: 'CIC-Digital Twin',
     footerDescription: 'Nền tảng tri thức và công cụ hỗ trợ chuyển đổi số hàng đầu cho ngành xây dựng Việt Nam.',
     facebook: '',
     linkedin: '',
