@@ -90,7 +90,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo - Simple & Professional */}
           <a href="#" onClick={(e) => handleNavClick(e, '#')} className="flex items-center gap-3 group">
-            <img src="/cic-ttb-web/cic_navy_logo.png" alt="CIC Logo" className="h-12 w-auto object-contain" />
             <div className="flex flex-col">
               <span className="text-lg font-extrabold uppercase tracking-tighter leading-none flex items-center gap-1" style={{ fontFamily: '"Montserrat", sans-serif' }}>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">CIC</span>
