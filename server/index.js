@@ -95,8 +95,8 @@ app.get('/api/news/:id/related', (req, res) => {
     });
 });
 
-// POST news - auth optional in dev for easier testing
-app.post('/api/news', (req, res) => {
+// POST news - protected
+app.post('/api/news', authenticateToken, (req, res) => {
     const { title, category, date, imageUrl, excerpt, content, author, videoUrl, audioUrl, attachments, metaTitle, metaDescription, keywords } = req.body;
     const attachmentsStr = attachments ? JSON.stringify(attachments) : null;
     const stmt = db.prepare("INSERT INTO news (title, category, date, imageUrl, excerpt, content, author, videoUrl, audioUrl, attachments, metaTitle, metaDescription, keywords) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -107,8 +107,8 @@ app.post('/api/news', (req, res) => {
     stmt.finalize();
 });
 
-// PUT news - auth optional in dev for easier testing
-app.put('/api/news/:id', (req, res) => {
+// PUT news - protected
+app.put('/api/news/:id', authenticateToken, (req, res) => {
     const { title, category, date, imageUrl, excerpt, content, author, videoUrl, audioUrl, attachments, metaTitle, metaDescription, keywords } = req.body;
     const attachmentsStr = attachments ? JSON.stringify(attachments) : null;
     const stmt = db.prepare("UPDATE news SET title=?, category=?, date=?, imageUrl=?, excerpt=?, content=?, author=?, videoUrl=?, audioUrl=?, attachments=?, metaTitle=?, metaDescription=?, keywords=? WHERE id=?");
@@ -119,8 +119,8 @@ app.put('/api/news/:id', (req, res) => {
     stmt.finalize();
 });
 
-// DELETE news - auth optional in dev for easier testing
-app.delete('/api/news/:id', (req, res) => {
+// DELETE news - protected
+app.delete('/api/news/:id', authenticateToken, (req, res) => {
     db.run("DELETE FROM news WHERE id=?", [req.params.id], function (err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: "Deleted", changes: this.changes });
@@ -135,7 +135,7 @@ app.get('/api/library', (req, res) => {
     });
 });
 
-app.post('/api/library', (req, res) => {
+app.post('/api/library', authenticateToken, (req, res) => {
     const { title, type, description, tag, image_url, link } = req.body;
     const stmt = db.prepare("INSERT INTO library (title, type, description, tag, image_url, link) VALUES (?, ?, ?, ?, ?, ?)");
     stmt.run([title, type, description, tag, image_url, link], function (err) {
@@ -145,7 +145,7 @@ app.post('/api/library', (req, res) => {
     stmt.finalize();
 });
 
-app.put('/api/library/:id', (req, res) => {
+app.put('/api/library/:id', authenticateToken, (req, res) => {
     const { title, type, description, tag, image_url, link } = req.body;
     const stmt = db.prepare("UPDATE library SET title=?, type=?, description=?, tag=?, image_url=?, link=? WHERE id=?");
     stmt.run([title, type, description, tag, image_url, link, req.params.id], function (err) {
@@ -170,7 +170,7 @@ app.get('/api/tools', (req, res) => {
     });
 });
 
-app.post('/api/tools', (req, res) => {
+app.post('/api/tools', authenticateToken, (req, res) => {
     const { title, description, icon, link } = req.body;
     const stmt = db.prepare("INSERT INTO tools (title, description, icon, link) VALUES (?, ?, ?, ?)");
     stmt.run([title, description, icon, link], function (err) {
@@ -180,7 +180,7 @@ app.post('/api/tools', (req, res) => {
     stmt.finalize();
 });
 
-app.put('/api/tools/:id', (req, res) => {
+app.put('/api/tools/:id', authenticateToken, (req, res) => {
     const { title, description, icon, link } = req.body;
     const stmt = db.prepare("UPDATE tools SET title=?, description=?, icon=?, link=? WHERE id=?");
     stmt.run([title, description, icon, link, req.params.id], function (err) {
@@ -215,7 +215,7 @@ app.post('/api/contacts', (req, res) => {
     stmt.finalize();
 });
 
-app.delete('/api/contacts/:id', (req, res) => {
+app.delete('/api/contacts/:id', authenticateToken, (req, res) => {
     db.run("DELETE FROM contacts WHERE id=?", [req.params.id], function (err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: "Deleted", id: req.params.id });
@@ -235,7 +235,7 @@ app.get('/api/pricing', (req, res) => {
     });
 });
 
-app.put('/api/pricing/:id', (req, res) => {
+app.put('/api/pricing/:id', authenticateToken, (req, res) => {
     const { name, price, period, description, features, ctaText, isPopular } = req.body;
     const featuresStr = JSON.stringify(features);
     const stmt = db.prepare("UPDATE pricing SET name=?, price=?, period=?, description=?, features=?, ctaText=?, isPopular=? WHERE id=?");
