@@ -6,7 +6,7 @@ import { api } from '../services/api';
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLoginSuccess: (user: { name: string; email: string }) => void;
+  onLoginSuccess: (user: { name: string; email: string; role?: string }) => void;
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess }) => {
@@ -28,7 +28,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
 
       onLoginSuccess({
         name: user.username,
-        email: user.username // Fallback
+        email: user.username,
+        role: user.role
       });
       onClose();
     } catch (err: any) {

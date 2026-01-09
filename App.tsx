@@ -25,6 +25,7 @@ import PortfolioSection from './components/PortfolioSection'; // Import Portfoli
 interface User {
   name: string;
   email: string;
+  role?: string;
 }
 
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';

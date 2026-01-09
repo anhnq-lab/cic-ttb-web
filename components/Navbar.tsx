@@ -5,6 +5,7 @@ import Button from './Button';
 interface User {
   name: string;
   email: string;
+  role?: string;
 }
 
 interface NavbarProps {
@@ -133,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
               <div className="flex items-center space-x-3">
                 <div className="text-right hidden lg:block">
                   <div className="text-sm font-bold text-gray-900">{user.name}</div>
-                  <div className="text-xs text-gray-500">Thành viên</div>
+                  <div className="text-xs text-gray-500">{user.role === 'admin' ? 'Quản trị viên' : 'Thành viên'}</div>
                 </div>
                 <div className="relative group cursor-pointer">
                   <div className="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold">
@@ -141,6 +142,12 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
                   </div>
                   {/* Dropdown User Menu */}
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform z-50 border border-gray-100">
+                    {user.role === 'admin' && (
+                      <>
+                        <a href="#/admin" onClick={(e) => { e.preventDefault(); navigate('/admin'); }} className="block px-4 py-2 text-sm text-blue-600 font-bold hover:bg-gray-100">⚙ Trang Quản trị</a>
+                        <div className="border-t border-gray-100 my-1"></div>
+                      </>
+                    )}
                     <a href="#" onClick={(e) => { e.preventDefault(); alert('Tính năng Hồ sơ cá nhân đang được phát triển!'); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hồ sơ cá nhân</a>
                     <a href="#" onClick={(e) => { e.preventDefault(); alert('Tính năng Dự án của tôi đang được phát triển!'); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dự án của tôi</a>
                     <div className="border-t border-gray-100 my-1"></div>
@@ -182,6 +189,10 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
                 {user ? (
                   <div className="flex flex-col space-y-2">
                     <div className="font-bold text-gray-900 px-2">{user.name}</div>
+                    {/* Admin Link Check for Mobile */}
+                    {(user && user.role === 'admin') && (
+                      <a href="#/admin" onClick={(e) => { e.preventDefault(); navigate('/admin'); setMobileMenuOpen(false); }} className="text-left text-gray-700 font-medium px-2 py-1 rounded hover:bg-gray-50">Trang quản trị</a>
+                    )}
                     <button onClick={onLogout} className="text-left text-red-600 font-medium px-2 py-1 rounded hover:bg-gray-50">Đăng xuất</button>
                   </div>
                 ) : (
