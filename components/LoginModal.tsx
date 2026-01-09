@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import Button from './Button';
 import { api } from '../services/api';
@@ -10,6 +11,7 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -112,7 +114,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
         </form>
 
         <div className="mt-4 text-center">
-          <a href="/admin" className="text-xs text-brand-blue hover:underline">Bạn là Quản trị viên? Truy cập tại đây</a>
+          <span
+            onClick={() => { onClose(); navigate('/admin'); }}
+            className="text-xs text-brand-blue hover:underline cursor-pointer"
+          >
+            Bạn là Quản trị viên? Truy cập tại đây
+          </span>
         </div>
       </div>
     </Modal>

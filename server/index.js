@@ -13,7 +13,11 @@ const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Middleware
-app.use(cors());
+// Middleware
+app.use(cors({
+    origin: ['https://anhnq-lab.github.io', 'http://localhost:5173', 'http://localhost:3000'],
+    credentials: true
+}));
 app.use(bodyParser.json({ limit: '10mb' })); // Increase limit for base64 images
 
 const fs = require('fs');

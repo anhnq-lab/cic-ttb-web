@@ -197,6 +197,7 @@ function App() {
               <Route path="/edt-core" element={<EDTCorePage />} />
               <Route path="/news/:id" element={<NewsDetail />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="*" element={<AppContent />} />
             </Routes>
             <CookieConsent />
           </Router>
@@ -205,5 +206,4 @@ function App() {
     </HelmetProvider>
   );
 }
-
 export default App;
