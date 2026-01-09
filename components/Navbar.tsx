@@ -95,7 +95,8 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold text-gray-900 leading-none tracking-tight">BIM & Digital Twin <span className="text-brand-blue">VN</span></span>
-              <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Cổng thông tin Pháp lý</span>
+              <span className="text-[10px] text-gray-500 font-medium italic tracking-wide hidden md:block">Digitaltwin: Chia sẻ - Kết nối - Kiến tạo tương lai</span>
+              <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider md:hidden">Cổng thông tin Pháp lý</span>
             </div>
           </a>
 
