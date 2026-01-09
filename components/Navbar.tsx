@@ -90,13 +90,13 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo - Simple & Professional */}
           <a href="#" onClick={(e) => handleNavClick(e, '#')} className="flex items-center gap-3 group">
-            <div className="flex flex-col">
+            <div className="flex flex-col items-start">
               <span className="text-lg font-extrabold uppercase tracking-tighter leading-none flex items-center gap-1" style={{ fontFamily: '"Montserrat", sans-serif' }}>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">CIC</span>
                 <span className="text-gray-400">-</span>
                 <span className="text-brand-orange">DIGITAL TWIN</span>
               </span>
-              <span className="text-[11px] text-gray-600 font-bold italic tracking-wide hidden md:block">Chia sẻ - Kết nối - Kiến tạo tương lai</span>
+              <span className="text-[11px] text-[#1a237e] font-bold italic tracking-wide hidden md:block mt-0.5">Chia sẻ - Kết nối - Kiến tạo tương lai</span>
               <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider md:hidden">Cổng thông tin Pháp lý</span>
             </div>
           </a>
