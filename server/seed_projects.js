@@ -1,10 +1,3 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-
-const dbPath = path.resolve(__dirname, 'database.sqlite');
-const db = new sqlite3.Database(dbPath);
-
-// Projects extracted from CIC_BIM_Profile.pdf
 const projects = [
     {
         title: 'Terra An Hưng',
@@ -79,30 +72,6 @@ const projects = [
         completion_date: '2022-12-31'
     },
     {
-        title: 'Bệnh viện Nhân dân Gia Định',
-        client: 'Công ty Cổ phần Tập đoàn Xây dựng Thành Đô',
-        location: 'Bình Thạnh, TP. Hồ Chí Minh',
-        service_type: 'BIM Modeling',
-        description: 'Bệnh viện 70.200 m2. Dựng mô hình giai đoạn thi công, phối hợp mô hình, kiểm tra va chạm và xuất bản vẽ Shop.',
-        challenge: 'Công trình y tế với hệ thống kỹ thuật phức tạp (MEP).',
-        solution: 'BIM coordination chuyên sâu cho hệ thống MEP bệnh viện.',
-        result: 'Phát hiện và xử lý hơn 500 va chạm trước khi thi công.',
-        images: ['https://picsum.photos/seed/hospital1/800/600'],
-        completion_date: '2022-12-31'
-    },
-    {
-        title: 'Bệnh viện Đa khoa Củ Chi',
-        client: 'BQL Dự án ĐTXD công trình Dân dụng & Công nghiệp',
-        location: 'Củ Chi, TP. Hồ Chí Minh',
-        service_type: 'BIM Modeling',
-        description: 'Bệnh viện đa khoa 84.500 m2. Dựng mô hình giai đoạn thi công, phối hợp mô hình, kiểm tra va chạm và xuất bản vẽ.',
-        challenge: 'Quy mô lớn với nhiều bộ môn chuyên ngành.',
-        solution: 'Triển khai BIM Level 2 với CDE tập trung.',
-        result: 'Nâng cao chất lượng phối hợp giữa các bên.',
-        images: ['https://picsum.photos/seed/cuchi/800/600'],
-        completion_date: '2021-12-31'
-    },
-    {
         title: 'K8-CT1 KĐT Tây Hồ Tây',
         client: 'Công ty TNHH Phát triển THT',
         location: 'Xuân La, Tây Hồ, Hà Nội',
@@ -125,94 +94,38 @@ const projects = [
         result: 'Đáp ứng yêu cầu cả hai bên và Bộ Xây dựng.',
         images: ['https://picsum.photos/seed/lotte/800/600'],
         completion_date: '2024-12-31'
-    },
-    {
-        title: 'Đại học Cần Thơ (JICA)',
-        client: 'JICA - Cơ quan Hợp tác Quốc tế Nhật Bản',
-        location: 'Ninh Kiều, TP. Cần Thơ',
-        service_type: 'BIM Modeling',
-        description: 'Công trình giáo dục 31.600 m2. Dựng mô hình giai đoạn thiết kế bản vẽ thi công, kiểm tra va chạm, phối hợp xử lý và xuất bản vẽ từ mô hình.',
-        challenge: 'Dự án ODA với tiêu chuẩn Nhật Bản nghiêm ngặt.',
-        solution: 'Áp dụng tiêu chuẩn BIM theo yêu cầu JICA.',
-        result: 'Được JICA nghiệm thu và đánh giá cao về chất lượng BIM.',
-        images: ['https://picsum.photos/seed/cantho/800/600'],
-        completion_date: '2020-12-31'
-    },
-    {
-        title: 'KCN Thuận Thành I - Bắc Ninh',
-        client: 'Tổng Công ty Viglacera - CTCP',
-        location: 'Thuận Thành, Bắc Ninh',
-        service_type: 'Digital Twin',
-        description: 'Khu công nghiệp 262.7 ha. Khảo sát quy trình vận hành, lập mô hình hoàn công, cập nhật thông tin tài sản và chuyển giao kỹ năng BIM cho vận hành.',
-        challenge: 'Số hóa toàn bộ KCN quy mô lớn để quản lý vận hành.',
-        solution: 'Triển khai Digital Twins cho quản lý tài sản KCN.',
-        result: 'Nâng cao hiệu quả quản lý và giảm chi phí vận hành.',
-        images: ['https://picsum.photos/seed/viglacera/800/600'],
-        completion_date: '2024-12-31'
-    },
-    {
-        title: 'Bệnh viện Tim Hà Nội (Cơ sở 2)',
-        client: 'Ban QLDA ĐTXD công trình Dân dụng TP. Hà Nội',
-        location: 'Tây Hồ, Hà Nội',
-        service_type: 'BIM Modeling',
-        description: 'Bệnh viện chuyên khoa tim mạch 47.960 m2. Tạo lập mô hình BIM 3D, kiểm soát thiết kế, phối hợp mô hình, video diễn họa, bóc tách khối lượng.',
-        challenge: 'Công trình y tế chuyên khoa với yêu cầu kỹ thuật cao.',
-        solution: 'BIM full-service từ thiết kế đến bóc tách khối lượng.',
-        result: 'Đảm bảo chất lượng thiết kế và tiến độ dự án.',
-        images: ['https://picsum.photos/seed/heart/800/600'],
-        completion_date: '2025-12-31'
-    },
-    {
-        title: 'Cung Thiếu nhi TP. Hồ Chí Minh',
-        client: 'BQL Dự án ĐTXD các công trình Dân dụng và Công nghiệp',
-        location: 'Thủ Thiêm, Quận 2, TP. HCM',
-        service_type: 'BIM Modeling',
-        description: 'Cung thiếu nhi 11.606 m2 tại Thủ Thiêm. Tạo lập mô hình BIM 3D, kiểm soát thiết kế, phối hợp mô hình, video diễn họa và bóc tách khối lượng.',
-        challenge: 'Công trình công cộng với kiến trúc đặc thù cho trẻ em.',
-        solution: 'BIM hỗ trợ visualization để trình bày cho các bên liên quan.',
-        result: 'Hỗ trợ ra quyết định thiết kế hiệu quả.',
-        images: ['https://picsum.photos/seed/children/800/600'],
-        completion_date: '2025-12-31'
-    },
-    {
-        title: 'Nhà xưởng Bình Dương - BW',
-        client: 'Công ty TNHH MTV Phát triển BW Thới Hòa',
-        location: 'Bến Cát, Bình Dương',
-        service_type: 'BIM Modeling',
-        description: 'Nhà xưởng công nghiệp 9.5 ha. Dựng mô hình thiết kế và thi công, phối hợp mô hình, kiểm tra va chạm, xuất bản vẽ Shop, tạo mô hình hoàn công và nhập thông tin tài sản.',
-        challenge: 'Dự án FDI với tiêu chuẩn quốc tế và tiến độ gấp.',
-        solution: 'Quy trình BIM tối ưu cho nhà xưởng công nghiệp.',
-        result: 'Hoàn thành trước tiến độ, bàn giao mô hình hoàn công đầy đủ.',
-        images: ['https://picsum.photos/seed/factory/800/600'],
-        completion_date: '2021-12-31'
     }
 ];
 
-console.log('Seeding projects from CIC_BIM_Profile...');
+function seedProjects(db) {
+    db.get("SELECT count(*) as count FROM projects", (err, row) => {
+        if (err) return console.error('Error checking projects:', err);
+        if (row.count === 0) {
+            console.log('Seeding projects from CIC_BIM_Profile...');
+            const stmt = db.prepare(`INSERT INTO projects 
+                (title, client, location, service_type, description, challenge, solution, result, images, completion_date) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 
-const stmt = db.prepare(`INSERT INTO projects 
-    (title, client, location, service_type, description, challenge, solution, result, images, completion_date) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+            projects.forEach((p, idx) => {
+                stmt.run([
+                    p.title,
+                    p.client,
+                    p.location,
+                    p.service_type,
+                    p.description,
+                    p.challenge,
+                    p.solution,
+                    p.result,
+                    JSON.stringify(p.images),
+                    p.completion_date
+                ]);
+            });
 
-projects.forEach((p, idx) => {
-    stmt.run([
-        p.title,
-        p.client,
-        p.location,
-        p.service_type,
-        p.description,
-        p.challenge,
-        p.solution,
-        p.result,
-        JSON.stringify(p.images),
-        p.completion_date
-    ], (err) => {
-        if (err) console.error(`Error inserting ${p.title}:`, err.message);
-        else console.log(`[${idx + 1}/${projects.length}] Added: ${p.title}`);
+            stmt.finalize(() => {
+                console.log('Done seeding projects!');
+            });
+        }
     });
-});
+}
 
-stmt.finalize(() => {
-    console.log('Done seeding projects!');
-    db.close();
-});
+module.exports = seedProjects;

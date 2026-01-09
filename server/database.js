@@ -44,6 +44,9 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
+const seedProjects = require('./seed_projects');
+const seedLibrary = require('./seed_library');
+
 function initDatabase() {
     db.serialize(() => {
         // News Table
@@ -138,6 +141,8 @@ function initDatabase() {
 
         // Seed Data if empty
         seedData();
+        seedProjects(db);
+        seedLibrary(db);
     });
 }
 
