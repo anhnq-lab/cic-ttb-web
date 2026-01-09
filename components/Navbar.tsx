@@ -89,10 +89,10 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch,
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo - Simple & Professional */}
-          <a href="#" onClick={(e) => handleNavClick(e, '#')} className="flex items-center gap-2 group">
-            <img src="/cic-ttb-web/cic-logo.png" alt="CIC Logo" className="h-10 w-auto object-contain" />
+          <a href="#" onClick={(e) => handleNavClick(e, '#')} className="flex items-center gap-3 group">
+            <img src="/cic-ttb-web/cic_navy_logo.png" alt="CIC Logo" className="h-12 w-auto object-contain" />
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-gray-900 leading-none tracking-tight">CIC-Digital Twin</span>
+              <span className="text-xl font-extrabold text-[#1a237e] uppercase tracking-widest leading-none drop-shadow-sm" style={{ fontFamily: '"Montserrat", sans-serif' }}>CIC-Digital Twin</span>
               <span className="text-[10px] text-gray-500 font-medium italic tracking-wide hidden md:block">Digitaltwin: Chia sẻ - Kết nối - Kiến tạo tương lai</span>
               <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider md:hidden">Cổng thông tin Pháp lý</span>
             </div>
