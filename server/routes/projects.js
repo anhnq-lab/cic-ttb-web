@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     if (error) return res.status(500).json({ error: error.message });
 
     // Parse specific JSON fields and map Legacy Schema
-    const parsedRows = data.map(row => {
+    const parsedRows = (data || []).map(row => {
         let images = [];
         try {
             if (row.images) {
