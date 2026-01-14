@@ -12,15 +12,29 @@ router.get('/', async (req, res) => {
 
     if (error) return res.status(500).json({ error: error.message });
 
-    // Parse specific JSON fields if they are stored as strings in older records or plain TEXT columns
-    // Supabase JS client automatically parses JSON columns, but if we used TEXT for 'images', we might need parsing.
-    // However, if we sent serialized strings, Supabase stores them.
+    // Parse specific JSON fields and map Legacy Schema
     const parsedRows = data.map(row => {
         let images = [];
         try {
-            images = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
+            if (row.images) {
+                images = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
+            } else if (row.imageUrl) {
+                images = [row.imageUrl];
+            }
         } catch (e) { images = []; }
-        return { ...row, images: images || [] };
+
+        // Map DB columns (name, investor, endDate, type) to Frontend expected fields (title, client, completion_date, service_type)
+        return {
+            ...row,
+            id: row.id,
+            title: row.name || row.title || 'Untitled',
+            client: row.investor || row.client || '',
+            completion_date: row.endDate || row.completion_date || '',
+            service_type: row.type || row.service_type || 'BIM Services',
+            description: row.description || '',
+            location: row.location || '',
+            images: images || []
+        };
     });
     res.json(parsedRows);
 });
@@ -38,10 +52,25 @@ router.get('/:id', async (req, res) => {
 
     let images = [];
     try {
-        images = typeof data.images === 'string' ? JSON.parse(data.images) : data.images;
+        if (data.images) {
+            images = typeof data.images === 'string' ? JSON.parse(data.images) : data.images;
+        } else if (data.imageUrl) {
+            images = [data.imageUrl];
+        }
     } catch (e) { images = []; }
 
-    res.json({ ...data, images: images || [] });
+    const mappedData = {
+        ...data,
+        title: data.name || data.title || 'Untitled',
+        client: data.investor || data.client || '',
+        completion_date: data.endDate || data.completion_date || '',
+        service_type: data.type || data.service_type || 'BIM Services',
+        description: data.description || '',
+        location: data.location || '',
+        images: images || []
+    };
+
+    res.json(mappedData);
 });
 
 // Create project (Auth required)
