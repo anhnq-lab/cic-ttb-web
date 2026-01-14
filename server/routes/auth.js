@@ -5,7 +5,51 @@ const jwt = require('jsonwebtoken');
 const supabase = require('../supabase');
 const { authenticateToken, JWT_SECRET } = require('../middleware/auth');
 
-// Login
+// Register
+router.post('/register', async (req, res) => {
+    try {
+        const { username, password, email, fullName } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ error: "Username and password are required" });
+        }
+
+        // Check availability
+        const { data: existingUser } = await supabase
+            .from('users')
+            .select('id')
+            .or(`username.eq.${username},email.eq.${email}`)
+            .single();
+
+        if (existingUser) {
+            return res.status(400).json({ error: "Username or Email already exists" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const { data: newUser, error } = await supabase
+            .from('users')
+            .insert([{
+                username,
+                password_hash: hashedPassword,
+                email,
+                full_name: fullName || username,
+                role: 'user',
+                provider: 'local'
+            }])
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        res.json({ message: "Registration successful", user: { id: newUser.id, username: newUser.username } });
+
+    } catch (e) {
+        console.error("Register Error:", e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
 // Login
 router.post('/login', async (req, res) => {
     try {
@@ -58,6 +102,58 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ error: "Server Error: " + e.message });
     }
 });
+
+// Google Login Verification
+router.post('/google', async (req, res) => {
+    try {
+        const { token, user: googleUser } = req.body; // Token from Frontend (Supabase Auth)
+
+        if (!googleUser || !googleUser.email) {
+            return res.status(400).json({ error: "Invalid Google User Data" });
+        }
+
+        // Check if user exists in OUR database
+        const { data: existingUser } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', googleUser.email)
+            .single();
+
+        if (existingUser) {
+            // User exists, return our JWT
+            const jwtToken = jwt.sign({ id: existingUser.id, username: existingUser.username, role: existingUser.role }, JWT_SECRET, { expiresIn: '24h' });
+            return res.json({ token: jwtToken, user: existingUser });
+        } else {
+            // Create new user from Google Data
+            const username = googleUser.email.split('@')[0] + '_' + Math.floor(Math.random() * 1000);
+
+            const { data: newUser, error } = await supabase
+                .from('users')
+                .insert([{
+                    username: username,
+                    email: googleUser.email,
+                    full_name: googleUser.user_metadata?.full_name || username,
+                    avatar_url: googleUser.user_metadata?.avatar_url,
+                    password_hash: 'google_auth_no_pass',
+                    role: 'user',
+                    provider: 'google',
+                    auth_id: googleUser.id // Link to Supabase Auth UUID
+                }])
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            const jwtToken = jwt.sign({ id: newUser.id, username: newUser.username, role: newUser.role }, JWT_SECRET, { expiresIn: '24h' });
+            return res.json({ token: jwtToken, user: newUser });
+        }
+
+    } catch (e) {
+        console.error("Google Auth Error:", e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
 
 // Get Current User
 router.get('/me', authenticateToken, (req, res) => {
