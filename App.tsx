@@ -33,6 +33,7 @@ import AdminDashboard from './components/AdminDashboard';
 import NewsDetail from './components/NewsDetail';
 import EDTCorePage from './pages/EDTCorePage';
 import { api } from './services/api';
+import { supabase } from './lib/supabaseClient';
 import { useEffect } from 'react';
 
 function Tracker() {
@@ -80,6 +81,32 @@ function AppContent() {
 
     return () => observer.disconnect();
   }, []); // Run once on mount
+
+  // Google OAuth Callback Handler
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        try {
+          // Sync with our backend to get JWT
+          const backendUser = await api.verifyGoogleLogin(session.access_token, session.user);
+          if (backendUser) {
+            setUser({
+              name: backendUser.full_name || backendUser.username,
+              email: backendUser.email,
+              role: backendUser.role
+            });
+          }
+        } catch (err) {
+          console.error('Google Auth Sync Error:', err);
+        }
+      }
+      if (event === 'SIGNED_OUT') {
+        setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleOpenContact = (service: string = '') => {
     setSelectedService(service);
