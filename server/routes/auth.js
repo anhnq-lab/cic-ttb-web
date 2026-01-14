@@ -60,8 +60,11 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: "Username and password are required" });
         }
 
-        // Hardcoded Master Admin for stability
-        if (username === 'admin' && password === 'admin123') {
+        // Secure Admin Login
+        const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
+        const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'admin123'; // Fallback only for dev
+
+        if (username === ADMIN_USER && password === ADMIN_PASS) {
             console.log("Attempting Master Admin Login");
             try {
                 if (!JWT_SECRET) throw new Error("JWT_SECRET is missing");

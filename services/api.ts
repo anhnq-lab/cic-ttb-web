@@ -5,7 +5,7 @@
 const isGitHubPages = window.location.hostname.includes('github.io');
 const RENDER_API_URL = 'https://cic-ttb-web.onrender.com/api';
 
-const API_BASE_URL = isGitHubPages ? RENDER_API_URL : '/api';
+export const API_BASE_URL = isGitHubPages ? RENDER_API_URL : '/api';
 const USE_REAL_API = true; // Always attempt to use real API now that we have Render
 
 // Helper for localStorage (development fallback)

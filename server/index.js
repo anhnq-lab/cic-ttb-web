@@ -71,6 +71,7 @@ if (process.env.GEMINI_API_KEY) {
 // --- ROUTES ---
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', require('./routes/projects'));
+app.use('/api/ai', require('./routes/ai')); // Register AI Routes
 
 // --- API ENDPOINTS ---
 
