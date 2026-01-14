@@ -8,15 +8,28 @@ const { authenticateToken, JWT_SECRET } = require('../middleware/auth');
 // Login
 // Login
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-
-    // Hardcoded Master Admin for stability
-    if (username === 'admin' && password === 'admin123') {
-        const token = jwt.sign({ id: 999, username: 'admin', role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
-        return res.json({ token, user: { id: 999, username: 'admin', role: 'admin' } });
-    }
-
     try {
+        console.log("Login request received:", req.body); // Debug log
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ error: "Username and password are required" });
+        }
+
+        // Hardcoded Master Admin for stability
+        if (username === 'admin' && password === 'admin123') {
+            console.log("Attempting Master Admin Login");
+            try {
+                if (!JWT_SECRET) throw new Error("JWT_SECRET is missing");
+                const token = jwt.sign({ id: 999, username: 'admin', role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
+                console.log("Master Admin Login Success");
+                return res.json({ token, user: { id: 999, username: 'admin', role: 'admin' } });
+            } catch (err) {
+                console.error("JWT Sign Error:", err);
+                return res.status(500).json({ error: "Internal Auth Error: " + err.message });
+            }
+        }
+
         const { data: user, error } = await supabase
             .from('users')
             .select('*')
@@ -24,10 +37,15 @@ router.post('/login', async (req, res) => {
             .single();
 
         if (error || !user) {
+            console.log("User not found or DB error:", error);
             return res.status(400).json({ error: "User not found" });
         }
 
         bcrypt.compare(password, user.password_hash, (err, result) => {
+            if (err) {
+                console.error("Bcrypt Error:", err);
+                return res.status(500).json({ error: "Auth processing error" });
+            }
             if (result) {
                 const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
                 res.json({ token, user: { id: user.id, username: user.username, role: user.role } });
@@ -36,7 +54,8 @@ router.post('/login', async (req, res) => {
             }
         });
     } catch (e) {
-        res.status(500).json({ error: e.message });
+        console.error("Global Login Error:", e);
+        res.status(500).json({ error: "Server Error: " + e.message });
     }
 });
 
