@@ -161,6 +161,31 @@ export const api = {
         }
     },
 
+    register: async (userData: any) => {
+        if (USE_REAL_API) {
+            const data = await apiRequest('/auth/register', {
+                method: 'POST',
+                body: JSON.stringify(userData)
+            });
+            return data;
+        }
+        throw new Error('Đăng ký chỉ hoạt động ở môi trường Production');
+    },
+
+    verifyGoogleLogin: async (token: string, user: any) => {
+        if (USE_REAL_API) {
+            const data = await apiRequest('/auth/google', {
+                method: 'POST',
+                body: JSON.stringify({ token, user })
+            });
+            if (data.token) {
+                localStorage.setItem('authToken', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+            }
+            return data.user;
+        }
+    },
+
     logout: () => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
