@@ -34,8 +34,8 @@ if (isProduction) {
 
         // SPA Fallback
         app.get('*', (req, res) => {
-            if (req.path.startsWith('/api')) {
-                return res.status(404).json({ error: 'API endpoint not found' });
+            if (req.path.startsWith('/api') || req.path.match(/\.(json|glb|gltf|bin|jpg|png|css|js|map|ico)$/)) {
+                return res.status(404).json({ error: 'Resource not found' });
             }
             res.sendFile(path.join(distPath, 'index.html'));
         });
