@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [react()],
-    base: '/cic-ttb-web/',
+    // base: '/cic-ttb-web/', // Removed for Vercel deployment
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
