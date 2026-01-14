@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const db = require('../database');
+const supabase = require('../supabase');
 const { authenticateToken, JWT_SECRET } = require('../middleware/auth');
 
 // Login
 // Login
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     // Hardcoded Master Admin for stability
@@ -16,9 +16,16 @@ router.post('/login', (req, res) => {
         return res.json({ token, user: { id: 999, username: 'admin', role: 'admin' } });
     }
 
-    db.get("SELECT * FROM users WHERE username = ?", [username], (err, user) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (!user) return res.status(400).json({ error: "User not found" });
+    try {
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('username', username)
+            .single();
+
+        if (error || !user) {
+            return res.status(400).json({ error: "User not found" });
+        }
 
         bcrypt.compare(password, user.password_hash, (err, result) => {
             if (result) {
@@ -28,7 +35,9 @@ router.post('/login', (req, res) => {
                 res.status(403).json({ error: "Invalid password" });
             }
         });
-    });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
 });
 
 // Get Current User
