@@ -13,6 +13,19 @@ interface ProjectManagerProps {
 }
 
 const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm, editingId, setEditingId, onSubmit, onEdit, onDelete }) => {
+    const [activeTab, setActiveTab] = React.useState<'published' | 'pending'>('published');
+
+    // Filter projects based on tab
+    const filteredProjects = projects.filter(p =>
+        activeTab === 'published' ? (p.status === 'published' || !p.status) : p.status === 'pending'
+    );
+
+    const handlePublish = (project: any) => {
+        // Publish logic: Update status to 'published'
+        // Reuse onEdit but just for status, or user enters edit mode
+        onEdit({ ...project, status: 'published' });
+    };
+
     return (
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <div className="xl:col-span-1">
@@ -49,6 +62,15 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                             </select>
                         </div>
 
+                        {/* Status Selection */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
+                            <select className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value={form.status || 'published'} onChange={e => setForm({ ...form, status: e.target.value })}>
+                                <option value="published">Công khai (Published)</option>
+                                <option value="pending">Chờ duyệt (Pending)</option>
+                            </select>
+                        </div>
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Hình ảnh dự án (Ảnh 1 là ảnh bìa)</label>
                             <ImageUploader
@@ -70,6 +92,15 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                         </div>
 
                         <div className="space-y-3 pt-2">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Phạm vi công việc (Scope)</label>
+                                <textarea className="w-full p-2 border border-gray-300 rounded h-16 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Phạm vi công việc..." value={form.scope_of_work || ''} onChange={e => setForm({ ...form, scope_of_work: e.target.value })} />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Nội dung chi tiết (Content)</label>
+                                <textarea className="w-full p-2 border border-gray-300 rounded h-32 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono" placeholder="Nội dung chi tiết (HTML)..." value={form.content || ''} onChange={e => setForm({ ...form, content: e.target.value })} />
+                            </div>
+
                             <textarea className="w-full p-2 border border-gray-300 rounded h-20 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Mô tả dự án..." value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
                             <textarea className="w-full p-2 border border-gray-300 rounded h-20 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Thách thức..." value={form.challenge} onChange={e => setForm({ ...form, challenge: e.target.value })} />
                             <textarea className="w-full p-2 border border-gray-300 rounded h-20 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Giải pháp..." value={form.solution} onChange={e => setForm({ ...form, solution: e.target.value })} />
@@ -83,7 +114,7 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                             {editingId && (
                                 <button type="button" onClick={() => {
                                     setEditingId(null);
-                                    setForm({ title: '', client: '', location: '', service_type: 'Scan-to-BIM', description: '', challenge: '', solution: '', result: '', images: [], completion_date: '' })
+                                    setForm({ title: '', client: '', location: '', service_type: 'Scan-to-BIM', description: '', challenge: '', solution: '', result: '', images: [], completion_date: '', content: '', scope_of_work: '', status: 'published' })
                                 }} className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">
                                     Hủy
                                 </button>
@@ -94,18 +125,39 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
             </div>
 
             <div className="xl:col-span-2">
-                <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-gray-800">Danh sách Dự án ({projects.length})</h3>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <h3 className="text-xl font-bold text-gray-800">Danh sách Dự án</h3>
+
+                    {/* Tabs */}
+                    <div className="flex bg-gray-100 p-1 rounded-lg">
+                        <button
+                            onClick={() => setActiveTab('published')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'published' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Đã đăng ({projects.filter(p => !p.status || p.status === 'published').length})
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('pending')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'pending' ? 'bg-white text-orange-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Chờ duyệt ({projects.filter(p => p.status === 'pending').length})
+                        </button>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {projects.map(p => (
-                        <div key={p.id} className="flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                    {filteredProjects.map(p => (
+                        <div key={p.id} className={`flex flex-col bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow ${p.status === 'pending' ? 'border-orange-200 ring-1 ring-orange-100' : 'border-gray-200'}`}>
                             <div className="relative h-48">
                                 <img src={p.images && p.images[0] ? p.images[0] : 'https://via.placeholder.com/300x200?text=No+Image'} className="w-full h-full object-cover" alt={p.title} />
                                 <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-blue-600 shadow-sm">
                                     {p.service_type}
                                 </div>
+                                {p.status === 'pending' && (
+                                    <div className="absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 rounded text-xs font-bold shadow-sm">
+                                        Chờ duyệt
+                                    </div>
+                                )}
                             </div>
                             <div className="p-4 flex-grow flex flex-col">
                                 <h4 className="font-bold text-lg text-gray-900 mb-1 line-clamp-1" title={p.title}>{p.title}</h4>
@@ -115,6 +167,9 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                                 </div>
                                 <p className="text-sm text-gray-600 line-clamp-2 mb-4 flex-grow">{p.description}</p>
                                 <div className="flex justify-end gap-2 pt-3 border-t border-gray-100">
+                                    {p.status === 'pending' && (
+                                        <button onClick={() => handlePublish(p)} className="px-3 py-1.5 text-sm bg-green-50 text-green-600 rounded hover:bg-green-100 font-bold transition-colors">Duyệt & Đăng</button>
+                                    )}
                                     <button onClick={() => onEdit(p)} className="px-3 py-1.5 text-sm bg-blue-50 text-blue-600 rounded hover:bg-blue-100 font-medium transition-colors">Sửa</button>
                                     <button onClick={() => onDelete(p.id)} className="px-3 py-1.5 text-sm bg-red-50 text-red-600 rounded hover:bg-red-100 font-medium transition-colors">Xóa</button>
                                 </div>
@@ -122,9 +177,9 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                         </div>
                     ))}
 
-                    {projects.length === 0 && (
+                    {filteredProjects.length === 0 && (
                         <div className="col-span-full py-12 text-center text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-                            Chưa có dự án nào. Hãy thêm dự án đầu tiên!
+                            {activeTab === 'published' ? 'Chưa có dự án nào được đăng.' : 'Không có dự án nào chờ duyệt.'}
                         </div>
                     )}
                 </div>
