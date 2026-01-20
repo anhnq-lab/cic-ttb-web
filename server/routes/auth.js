@@ -79,14 +79,30 @@ router.post('/login', async (req, res) => {
             }
         }
 
+        // Check if Supabase is initialized
+        if (!supabase) {
+            console.error("❌ Supabase client is null. Cannot query database.");
+            return res.status(500).json({ error: "Database Connection Error: Supabase client not initialized" });
+        }
+
         const { data: user, error } = await supabase
             .from('users')
             .select('*')
             .eq('username', username)
             .single();
 
-        if (error || !user) {
-            console.log("User not found or DB error:", error);
+        if (error) {
+            console.error("Supabase DB Error during login:", error);
+            // If user not found, it might return a specific code, but typically .single() with no rows returns error
+            if (error.code === 'PGRST116') { // JSON object returned was empty (no rows)
+                console.log("User not found in DB.");
+                return res.status(400).json({ error: "User not found" });
+            }
+            return res.status(500).json({ error: "Database error: " + error.message });
+        }
+
+        if (!user) {
+            console.log("User variable is null/undefined despite no error.");
             return res.status(400).json({ error: "User not found" });
         }
 
@@ -96,15 +112,17 @@ router.post('/login', async (req, res) => {
                 return res.status(500).json({ error: "Auth processing error" });
             }
             if (result) {
+                console.log(`User ${username} logged in successfully.`);
                 const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
                 res.json({ token, user: { id: user.id, username: user.username, role: user.role } });
             } else {
+                console.warn(`Invalid password attempt for ${username}`);
                 res.status(403).json({ error: "Invalid password" });
             }
         });
     } catch (e) {
         console.error("Global Login Error:", e);
-        res.status(500).json({ error: "Server Error: " + e.message });
+        res.status(500).json({ error: "Server Error: " + e.message, details: e.toString() });
     }
 });
 

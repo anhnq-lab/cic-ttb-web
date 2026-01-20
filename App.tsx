@@ -32,6 +32,8 @@ import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-d
 import AdminDashboard from './components/AdminDashboard';
 import NewsDetail from './components/NewsDetail';
 import EDTCorePage from './pages/EDTCorePage';
+import TrainingList from './pages/training/TrainingList';
+import TrainingDetail from './pages/training/TrainingDetail';
 import { api } from './services/api';
 import { supabase } from './lib/supabaseClient';
 import { useEffect } from 'react';
@@ -223,6 +225,8 @@ function App() {
               <Route path="/" element={<AppContent />} />
               <Route path="/edt-core" element={<EDTCorePage />} />
               <Route path="/news/:id" element={<NewsDetail />} />
+              <Route path="/dao-tao" element={<TrainingList />} />
+              <Route path="/dao-tao/:slug" element={<TrainingDetail />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<AppContent />} />
             </Routes>

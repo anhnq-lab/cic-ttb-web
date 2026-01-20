@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-
-// Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const { genAI } = require('../services/gemini');
+const { authenticateToken } = require('../middleware/auth');
+const aiController = require('../controllers/aiController');
 
 const SYSTEM_PROMPT = `Bạn là trợ lý AI của CIC BIM Hub - Cổng thông tin pháp lý và công nghệ BIM hàng đầu Việt Nam. 
 Bạn giúp người dùng tra cứu các văn bản pháp lý mới nhất về BIM (Nghị định 175/2024, Nghị định 111/2024, Thông tư 10/2024) 
@@ -14,11 +13,13 @@ Hãy trả lời ngắn gọn, chính xác và thân thiện bằng tiếng Vi�
 router.post('/chat', async (req, res) => {
     const { message } = req.body;
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!genAI) {
         return res.status(503).json({ error: 'AI Service Unavailable' });
     }
 
     try {
+        // Use gemini-2.0-flash as specifically requested in original code, 
+        // fallback to gemini-pro if needed or just use flash
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
         const result = await model.generateContentStream({
@@ -46,5 +47,8 @@ router.post('/chat', async (req, res) => {
         }
     }
 });
+
+// Generate Content Endpoint (Moved from index.js)
+router.post('/generate', authenticateToken, aiController.generateContent);
 
 module.exports = router;
