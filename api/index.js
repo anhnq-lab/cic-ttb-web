@@ -1,5 +1,5 @@
-const app = require('../server/index');
+import app from '../server/index.js';
 
-module.exports = (req, res) => {
+export default (req, res) => {
     app(req, res);
 };
