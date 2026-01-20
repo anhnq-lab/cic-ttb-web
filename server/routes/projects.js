@@ -5,12 +5,21 @@ const { authenticateToken } = require('../middleware/auth');
 
 // Get all projects
 router.get('/', async (req, res) => {
+    console.log('[Backend] GET /api/projects - Fetching from Supabase...');
     const { data, error } = await supabase
         .from('projects')
         .select('*')
         .order('created_at', { ascending: false });
 
-    if (error) return res.status(500).json({ error: error.message });
+    if (error) {
+        console.error('[Backend] Supabase Error:', error);
+        return res.status(500).json({ error: error.message });
+    }
+
+    console.log('[Backend] Raw projects from DB (count):', data?.length || 0);
+    if (data && data.length > 0) {
+        console.log('[Backend] First project raw name:', data[0].name || data[0].title);
+    }
 
     // Parse specific JSON fields and map Legacy Schema
     const parsedRows = (data || []).map(row => {
