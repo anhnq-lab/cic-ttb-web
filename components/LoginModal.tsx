@@ -155,7 +155,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
                 <input type="checkbox" className="mr-2 rounded border-gray-300 text-brand-blue focus:ring-brand-blue" />
                 Ghi nhớ đăng nhập
               </label>
-              <a href="#" className="text-brand-blue hover:underline">Quên mật khẩu?</a>
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, username: 'admin', password: 'admin123' }))}
+                  className="text-gray-500 hover:text-brand-blue"
+                >
+                  Auto-fill Admin
+                </button>
+                <a href="#" className="text-brand-blue hover:underline">Quên mật khẩu?</a>
+              </div>
             </div>
           )}
 
