@@ -129,8 +129,16 @@ const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
     });
 
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `API Error: ${response.status} ${response.statusText}`);
+        let errorMessage = `API Error: ${response.status} ${response.statusText}`;
+        try {
+            const errorData = await response.json();
+            errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch (e) {
+            // Failed to parse JSON, try text
+            const text = await response.text().catch(() => '');
+            if (text) errorMessage += ` | Response: ${text.substring(0, 100)}`;
+        }
+        throw new Error(errorMessage);
     }
 
     return response.json();
