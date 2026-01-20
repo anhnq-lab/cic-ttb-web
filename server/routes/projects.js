@@ -12,6 +12,10 @@ router.get('/', async (req, res) => {
 
     if (error) return res.status(500).json({ error: error.message });
 
+    if (data && data.length > 0) {
+        console.log('[Backend Diagnosis] Projects table columns:', Object.keys(data[0]));
+    }
+
     // Parse specific JSON fields and map Legacy Schema
     const parsedRows = (data || []).map(row => {
         let images = [];
