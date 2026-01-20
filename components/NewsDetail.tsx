@@ -1,8 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { api } from '../services/api'; // Ensure api returns extended NewsItem
-import Navbar from './Navbar';
-import Footer from './Footer';
+import { api } from '../services/api';
 import { NewsItem } from '../types';
 import SEO from './SEO';
 import SocialShare from './SocialShare';
@@ -19,9 +18,8 @@ const NewsDetail: React.FC = () => {
     useEffect(() => {
         if (!id) return;
         setLoading(true);
-        window.scrollTo(0, 0); // Scroll to top on new article
+        window.scrollTo(0, 0);
 
-        // Fetch article and related news
         Promise.all([
             api.getNewsDetail(id),
             api.getRelatedNews(id)
@@ -49,9 +47,7 @@ const NewsDetail: React.FC = () => {
     if (!news) return <div className="min-h-screen flex justify-center items-center">Không tìm thấy bài viết.</div>;
 
     const renderVideo = (url: string) => {
-        // Simple check for YouTube embed
         const isYouTube = url.includes('youtube.com') || url.includes('youtu.be');
-
         return (
             <div className="my-8 rounded-xl overflow-hidden shadow-sm border border-gray-100 bg-black aspect-video relative group">
                 {isYouTube ? (
@@ -93,7 +89,7 @@ const NewsDetail: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col font-sans bg-gray-50">
+        <div className="min-h-screen bg-gray-50 pb-20">
             {news && (
                 <SEO
                     title={news.title}
@@ -103,25 +99,20 @@ const NewsDetail: React.FC = () => {
                     type="article"
                 />
             )}
-            {/* Header / Nav Placeholder - Using simple header as before */}
-            <div className="bg-white shadow sticky top-0 z-50">
-                <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <Link to="/" className="text-xl md:text-2xl font-bold text-gray-800 flex items-center">
-                        <div className="w-8 h-8 bg-brand-blue rounded mr-2 flex items-center justify-center text-white">
-                            <span className="font-bold">B</span>
-                        </div>
-                        BIM Hub VN
-                    </Link>
-                    <Link to="/" className="flex items-center text-brand-blue font-medium hover:bg-blue-50 px-3 py-2 rounded-lg transition-colors text-sm md:text-base">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                        Quay lại
-                    </Link>
+
+            {/* Breadcrumbs */}
+            <div className="bg-white border-b border-gray-100">
+                <div className="container mx-auto px-4 py-4">
+                    <nav className="flex items-center text-sm">
+                        <Link to="/" className="text-gray-500 hover:text-brand-blue">Trang chủ</Link>
+                        <svg className="w-4 h-4 mx-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        <span className="text-brand-blue font-bold truncate max-w-xs">{news.title}</span>
+                    </nav>
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-8 md:py-12 max-w-4xl flex-grow">
+            <div className="container mx-auto px-4 py-8 md:py-12 max-w-4xl">
                 <article className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    {/* Hero Section */}
                     <div className="p-8 md:p-12 pb-0">
                         <div className="flex flex-wrap gap-3 mb-6">
                             <span className="bg-blue-100 text-brand-blue text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
@@ -131,12 +122,6 @@ const NewsDetail: React.FC = () => {
                                 <span className="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center">
                                     <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z" /></svg>
                                     Audio
-                                </span>
-                            )}
-                            {news.videoUrl && (
-                                <span className="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center">
-                                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" /></svg>
-                                    Video
                                 </span>
                             )}
                         </div>
@@ -170,96 +155,49 @@ const NewsDetail: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Featured Image */}
                     {news.imageUrl && (
                         <div className="w-full h-[400px] md:h-[500px] relative">
                             <img src={news.imageUrl} alt={news.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </div>
                     )}
 
                     <div className="p-8 md:p-12 pt-10">
-                        {/* Audio Player if present */}
                         {news.audioUrl && renderAudio(news.audioUrl)}
-
-                        {/* Video Player if present */}
                         {news.videoUrl && renderVideo(news.videoUrl)}
-
-                        {/* Content */}
                         <div
                             className="article-content text-gray-700 leading-relaxed text-lg"
                             dangerouslySetInnerHTML={{
                                 __html: formatArticleContent(news.content || news.excerpt)
                             }}
                         />
-
-                        {/* Social Share */}
                         <SocialShare url={window.location.href} title={news.title} />
-
-                        {/* Attachments Section */}
-                        {news.attachments && news.attachments.length > 0 && (
-                            <div className="mt-12 pt-8 border-t border-gray-100">
-                                <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                    Tài liệu đính kèm
-                                </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {news.attachments.map((file: any, index: number) => (
-                                        <div key={index} className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-brand-blue hover:bg-blue-50 transition-colors group cursor-pointer">
-                                            <div className="bg-red-100 text-red-600 p-3 rounded-lg mr-4 group-hover:bg-white group-hover:text-red-500 transition-colors">
-                                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="font-semibold text-gray-900 truncate group-hover:text-brand-blue">{file.name}</p>
-                                                <p className="text-xs text-gray-500">{file.size} • {file.type ? file.type.toUpperCase() : 'FILE'}</p>
-                                            </div>
-                                            <div className="text-gray-400 group-hover:text-brand-blue">
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </article>
 
-                {/* Related News Section */}
                 {relatedNews.length > 0 && (
                     <div className="mt-12">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Bài viết liên quan</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6 font-black uppercase tracking-widest text-sm">Bài viết liên quan</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {relatedNews.map((item) => (
-                                <Link to={`/news/${item.id}`} key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-shadow">
+                                <Link to={`/news/${item.id}`} key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl transition-all hover:-translate-y-1">
                                     <div className="h-48 overflow-hidden relative">
-                                        <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                        <div className="absolute top-2 left-2 bg-white/90 backdrop-blur text-gray-800 text-[10px] font-bold px-2 py-1 rounded uppercase">
+                                        <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <div className="absolute top-2 left-2 bg-brand-darkBlue/80 backdrop-blur text-white text-[9px] font-black px-2 py-1 rounded uppercase tracking-widest">
                                             {item.category}
                                         </div>
                                     </div>
                                     <div className="p-5">
-                                        <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-brand-blue transition-colors">
+                                        <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-brand-blue transition-colors text-sm">
                                             {item.title}
                                         </h3>
-                                        <div className="text-xs text-gray-400 mb-2">{item.date}</div>
-                                        <p className="text-sm text-gray-500 line-clamp-2">{item.excerpt}</p>
+                                        <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.date}</div>
                                     </div>
                                 </Link>
                             ))}
                         </div>
                     </div>
                 )}
-
-                {/* Navigation Bottom */}
-                <div className="mt-12 text-center border-t border-gray-200 pt-8">
-                    <Link to="/" className="inline-flex items-center text-gray-500 hover:text-brand-blue font-medium transition-colors">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                        Quay lại danh sách tin tức
-                    </Link>
-                </div>
             </div>
-
-            <Footer />
         </div>
     );
 };
