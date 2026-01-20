@@ -130,7 +130,10 @@ router.put('/:id', authenticateToken, async (req, res) => {
         .eq('id', req.params.id)
         .select();
 
-    if (error) return res.status(500).json({ error: error.message });
+    if (error) {
+        console.error('[Backend] Error updating project:', error);
+        return res.status(500).json({ error: error.message });
+    }
     res.json(data[0]);
 });
 
