@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { trainingService, TrainingCourse } from '../../services/trainingService';
 import { Helmet } from 'react-helmet-async';
-import TrainingLayout from '../../components/training/TrainingLayout';
 
 const TrainingList: React.FC = () => {
     const [courses, setCourses] = useState<TrainingCourse[]>([]);
     const [loading, setLoading] = useState(true);
+    const [activeFilter, setActiveFilter] = useState<'all' | 'basic' | 'advanced' | 'expert'>('all');
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -27,78 +27,197 @@ const TrainingList: React.FC = () => {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     };
 
+    // Filter courses by level
+    const filteredCourses = courses.filter(course => {
+        if (activeFilter === 'all') return true;
+        const levelMap: Record<string, string[]> = {
+            'basic': ['cơ bản', 'basic', 'co ban'],
+            'advanced': ['nâng cao', 'advanced', 'nang cao'],
+            'expert': ['chuyên gia', 'expert', 'chuyen gia', 'trung cấp']
+        };
+        return levelMap[activeFilter]?.some(l => course.level?.toLowerCase().includes(l));
+    });
+
+    const filterButtons = [
+        { id: 'all', label: 'Tất cả', count: courses.length },
+        { id: 'basic', label: 'Cơ bản', count: courses.filter(c => c.level?.toLowerCase().includes('cơ bản')).length },
+        { id: 'advanced', label: 'Nâng cao', count: courses.filter(c => c.level?.toLowerCase().includes('nâng cao')).length },
+        { id: 'expert', label: 'Chuyên gia', count: courses.filter(c => c.level?.toLowerCase().includes('chuyên gia') || c.level?.toLowerCase().includes('trung cấp')).length },
+    ];
+
     return (
-        <TrainingLayout activeSection="courses">
-            <div className="bg-gray-50 min-h-screen">
-                <Helmet>
-                    <title>Chương trình Đào tạo BIM | CIC</title>
-                    <meta name="description" content="Các khóa học BIM chuyên sâu từ cơ bản đến nâng cao, chuẩn ISO 19650 do CIC tổ chức đào tạo." />
-                </Helmet>
+        <div className="bg-gray-50 min-h-screen">
+            <Helmet>
+                <title>Đào tạo BIM chuyên nghiệp | Khóa học chuẩn ISO 19650 | CIC</title>
+                <meta name="description" content="Các khóa đào tạo BIM từ cơ bản đến nâng cao, chuẩn ISO 19650. Giảng viên dày dặn kinh nghiệm, chứng chỉ được công nhận. Đăng ký ngay!" />
+                <meta name="keywords" content="đào tạo BIM, khóa học BIM, chứng chỉ BIM, ISO 19650, Revit, Navisworks, CDE" />
+                <meta property="og:title" content="Đào tạo BIM chuyên nghiệp | CIC" />
+                <meta property="og:description" content="Nâng cao năng lực đội ngũ với các khóa học BIM chuyên sâu từ chuyên gia hàng đầu." />
+                <meta property="og:type" content="website" />
+                <link rel="canonical" href="https://cic-ttb-web.vercel.app/dao-tao" />
+            </Helmet>
 
-                {/* Header Banner - Navy Blue matching website */}
-                <div className="bg-gradient-to-r from-[#1a237e] to-[#2c3e9e] text-white py-16 shadow-lg">
-                    <div className="container mx-auto px-4 text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4">Chương trình Đào tạo BIM</h1>
-                        <p className="text-xl text-blue-100 max-w-2xl mx-auto">Nâng cao năng lực đội ngũ với các khóa học BIM chuyên sâu, thực chiến từ các chuyên gia hàng đầu của CIC.</p>
-                    </div>
-                </div>
-
-                <div className="container mx-auto px-4 py-12">
-                    {loading ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="animate-pulse bg-white rounded-lg h-96 shadow"></div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {courses.map(course => (
-                                <div key={course.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
-                                    <div className="h-48 overflow-hidden relative">
-                                        <img
-                                            src={course.image_url}
-                                            alt={course.title}
-                                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                                        />
-                                        <div className="absolute top-4 right-4 bg-[#1a237e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-                                            {course.level}
-                                        </div>
-                                    </div>
-                                    <div className="p-6 flex-1 flex flex-col">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[56px]">
-                                            <Link to={`/dao-tao/${course.slug}`} className="hover:text-[#1a237e]">
-                                                {course.title}
-                                            </Link>
-                                        </h3>
-                                        <p className="text-gray-600 mb-4 line-clamp-3 text-sm flex-1">
-                                            {course.description}
-                                        </p>
-
-                                        <div className="flex items-center text-sm text-gray-500 mb-4 space-x-4">
-                                            <div className="flex items-center">
-                                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                {course.duration}
-                                            </div>
-                                            <div className="flex items-center">
-                                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                {formatPrice(course.price)}
-                                            </div>
-                                        </div>
-
-                                        <Link
-                                            to={`/dao-tao/${course.slug}`}
-                                            className="block w-full text-center bg-gray-50 hover:bg-[#1a237e] hover:text-white text-[#1a237e] font-semibold py-3 rounded-lg border border-[#1a237e] transition-all"
-                                        >
-                                            Xem chi tiết
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+            {/* Breadcrumbs */}
+            <div className="bg-white border-b border-gray-200">
+                <div className="container mx-auto px-4 py-3">
+                    <nav className="flex items-center text-sm">
+                        <Link to="/" className="text-gray-500 hover:text-[#1a237e] transition-colors">
+                            Trang chủ
+                        </Link>
+                        <svg className="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                        <span className="text-[#1a237e] font-semibold">Đào tạo BIM</span>
+                    </nav>
                 </div>
             </div>
-        </TrainingLayout>
+
+            {/* Hero Section */}
+            <div className="bg-gradient-to-r from-[#1a237e] to-[#3949ab] text-white py-20">
+                <div className="container mx-auto px-4 text-center">
+                    <span className="inline-block bg-white/20 text-white text-sm font-medium px-4 py-1 rounded-full mb-4">
+                        🎓 Chuẩn ISO 19650
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        Đào tạo BIM <span className="text-yellow-300">Chuyên nghiệp</span>
+                    </h1>
+                    <p className="text-xl text-blue-100 max-w-2xl mx-auto mb-8">
+                        Nâng cao năng lực đội ngũ với các khóa học BIM chuyên sâu, thực chiến từ các chuyên gia hàng đầu của CIC.
+                    </p>
+
+                    {/* Stats */}
+                    <div className="flex justify-center gap-8 md:gap-16 mt-8">
+                        <div className="text-center">
+                            <div className="text-3xl font-bold text-yellow-300">500+</div>
+                            <div className="text-sm text-blue-200">Học viên</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-3xl font-bold text-yellow-300">4.8★</div>
+                            <div className="text-sm text-blue-200">Đánh giá</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-3xl font-bold text-yellow-300">{courses.length}</div>
+                            <div className="text-sm text-blue-200">Khóa học</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Filter Bar */}
+            <div className="bg-white shadow-sm sticky top-0 z-30">
+                <div className="container mx-auto px-4 py-4">
+                    <div className="flex flex-wrap gap-2 justify-center">
+                        {filterButtons.map(btn => (
+                            <button
+                                key={btn.id}
+                                onClick={() => setActiveFilter(btn.id as typeof activeFilter)}
+                                className={`px-5 py-2 rounded-full font-medium text-sm transition-all ${activeFilter === btn.id
+                                        ? 'bg-[#1a237e] text-white shadow-md'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    }`}
+                            >
+                                {btn.label} {btn.count > 0 && <span className="opacity-70">({btn.count})</span>}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Course Grid */}
+            <div className="container mx-auto px-4 py-12">
+                {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[1, 2, 3].map(i => (
+                            <div key={i} className="animate-pulse bg-white rounded-xl h-96 shadow"></div>
+                        ))}
+                    </div>
+                ) : filteredCourses.length === 0 ? (
+                    <div className="text-center py-20 text-gray-500">
+                        <p className="text-lg">Không tìm thấy khóa học phù hợp</p>
+                        <button
+                            onClick={() => setActiveFilter('all')}
+                            className="mt-4 text-[#1a237e] font-medium hover:underline"
+                        >
+                            Xem tất cả khóa học
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredCourses.map(course => (
+                            <article key={course.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group">
+                                <div className="h-48 overflow-hidden relative">
+                                    <img
+                                        src={course.image_url}
+                                        alt={`Khóa học ${course.title}`}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        loading="lazy"
+                                    />
+                                    <div className="absolute top-4 right-4 bg-[#1a237e] text-white text-xs font-bold px-3 py-1 rounded-full uppercase shadow-lg">
+                                        {course.level}
+                                    </div>
+                                </div>
+                                <div className="p-6 flex-1 flex flex-col">
+                                    <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[56px] group-hover:text-[#1a237e] transition-colors">
+                                        <Link to={`/dao-tao/${course.slug}`}>
+                                            {course.title}
+                                        </Link>
+                                    </h2>
+                                    <p className="text-gray-600 mb-4 line-clamp-3 text-sm flex-1">
+                                        {course.description}
+                                    </p>
+
+                                    <div className="flex items-center text-sm text-gray-500 mb-4 space-x-4">
+                                        <div className="flex items-center">
+                                            <svg className="w-4 h-4 mr-1 text-[#1a237e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            {course.duration}
+                                        </div>
+                                        <div className="flex items-center font-semibold text-green-600">
+                                            {formatPrice(course.price)}
+                                        </div>
+                                    </div>
+
+                                    <Link
+                                        to={`/dao-tao/${course.slug}`}
+                                        className="block w-full text-center bg-[#1a237e] hover:bg-[#0d1554] text-white font-semibold py-3 rounded-lg transition-all shadow-md hover:shadow-lg"
+                                    >
+                                        Xem chi tiết →
+                                    </Link>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-gradient-to-r from-[#1a237e] to-[#3949ab] py-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold text-white mb-4">Chưa biết bắt đầu từ đâu?</h2>
+                    <p className="text-blue-100 mb-8 max-w-xl mx-auto">
+                        Đội ngũ tư vấn của CIC sẵn sàng hỗ trợ bạn lựa chọn lộ trình đào tạo phù hợp nhất.
+                    </p>
+                    <a
+                        href="#contact"
+                        className="inline-block bg-yellow-400 hover:bg-yellow-500 text-[#1a237e] font-bold px-8 py-4 rounded-lg transition-all shadow-lg hover:shadow-xl"
+                    >
+                        📞 Nhận tư vấn miễn phí
+                    </a>
+                </div>
+            </div>
+
+            {/* Sticky CTA Button */}
+            <a
+                href="tel:+84123456789"
+                className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 z-50 transition-all hover:scale-105"
+            >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span className="hidden md:inline">Gọi ngay</span>
+            </a>
+        </div>
     );
 };
 
