@@ -80,8 +80,9 @@ router.get('/:id', async (req, res) => {
 // Create project (Auth required)
 router.post('/', authenticateToken, async (req, res) => {
     const { title, client, location, service_type, description, challenge, solution, result, images, completion_date, content, scope_of_work, status } = req.body;
-    // Store as JSON string if column is TEXT.
-    const imagesJson = JSON.stringify(images || []);
+    // Store first image or JSON string in imageUrl depending on DB preference, 
+    // but the error said 'images' not found, and schema said 'imageUrl'.
+    const imageToStore = images && images.length > 0 ? images[0] : (typeof images === 'string' ? images : null);
 
     const { data, error } = await supabase
         .from('projects')
@@ -94,13 +95,13 @@ router.post('/', authenticateToken, async (req, res) => {
             challenge,
             solution,
             result,
-            images: imagesJson,
+            imageUrl: imageToStore,
             endDate: completion_date,
             content,
             scope_of_work,
             status: status || 'published'
         }])
-        .select(); // Select to return the created row
+        .select();
 
     if (error) {
         console.error('[Backend] Error creating project:', error);
@@ -112,7 +113,7 @@ router.post('/', authenticateToken, async (req, res) => {
 // Update project (Auth required)
 router.put('/:id', authenticateToken, async (req, res) => {
     const { title, client, location, service_type, description, challenge, solution, result, images, completion_date, content, scope_of_work, status } = req.body;
-    const imagesJson = JSON.stringify(images || []);
+    const imageToStore = images && images.length > 0 ? images[0] : (typeof images === 'string' ? images : null);
 
     const { data, error } = await supabase
         .from('projects')
@@ -125,7 +126,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
             challenge,
             solution,
             result,
-            images: imagesJson,
+            imageUrl: imageToStore,
             endDate: completion_date,
             content,
             scope_of_work,
