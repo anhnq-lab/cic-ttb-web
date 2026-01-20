@@ -10,6 +10,8 @@ import AnalyticsManager from './admin/AnalyticsManager';
 import ToolsManager from './admin/ToolsManager';
 import PricingManager from './admin/PricingManager';
 import ProjectManager from './admin/ProjectManager';
+import TrainingManager from './admin/TrainingManager';
+import LeadManager from './admin/LeadManager';
 
 const AdminDashboard: React.FC = () => {
     const [activeTab, setActiveTab] = useState('analytics'); // Default to Analytics or Projects as landing
@@ -89,13 +91,13 @@ const AdminDashboard: React.FC = () => {
     useEffect(() => {
         if (isAuthenticated) {
             console.log('[Admin] Authenticated. Loading data for tab:', activeTab);
-            if (activeTab === 'contacts') api.getContacts().then(setContacts).catch(console.error);
-            if (activeTab === 'news') api.getNews().then(setNewsList).catch(console.error);
-            if (activeTab === 'settings') api.getSettings().then(d => d && setSettings(d as any)).catch(console.error);
-            if (activeTab === 'analytics') api.getAnalyticsStats().then(setStats).catch(console.error);
-            if (activeTab === 'library') api.getLibrary().then(setLibrary).catch(console.error);
-            if (activeTab === 'tools') api.getTools().then(setTools).catch(console.error);
-            if (activeTab === 'pricing') api.getPricing().then(setPricing).catch(console.error);
+            if (activeTab === 'contacts') api.getContacts().then(setContacts).catch(err => console.error('[Admin] Error loading contacts:', err));
+            if (activeTab === 'news') api.getNews().then(setNewsList).catch(err => console.error('[Admin] Error loading news:', err));
+            if (activeTab === 'settings') api.getSettings().then(d => d && setSettings(d as any)).catch(err => console.error('[Admin] Error loading settings:', err));
+            if (activeTab === 'analytics') api.getAnalyticsStats().then(setStats).catch(err => console.error('[Admin] Error loading analytics:', err));
+            if (activeTab === 'library') api.getLibrary().then(setLibrary).catch(err => console.error('[Admin] Error loading library:', err));
+            if (activeTab === 'tools') api.getTools().then(setTools).catch(err => console.error('[Admin] Error loading tools:', err));
+            if (activeTab === 'pricing') api.getPricing().then(setPricing).catch(err => console.error('[Admin] Error loading pricing:', err));
             if (activeTab === 'projects') {
                 console.log('[Admin] Calling api.getProjects()...');
                 api.getProjects().then(data => {
@@ -244,6 +246,10 @@ const AdminDashboard: React.FC = () => {
             {activeTab === 'tools' && <ToolsManager tools={tools} toolForm={toolForm} setToolForm={setToolForm} editingId={editingToolId} setEditingId={setEditingToolId} onSubmit={handleToolSubmit} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteTool(id); api.getTools().then(setTools); } }} />}
 
             {activeTab === 'pricing' && <PricingManager pricing={pricing} pricingForm={pricingForm} setPricingForm={setPricingForm} editingId={editingPricingId} setEditingId={setEditingPricingId} onSubmit={handlePricingSubmit} />}
+
+            {activeTab === 'training' && <TrainingManager />}
+
+            {activeTab === 'training_leads' && <LeadManager />}
 
             {activeTab === 'settings' && <SettingsManager settings={settings} setSettings={setSettings} onSubmit={async (e) => { e.preventDefault(); try { await api.saveSettings(settings); alert('Đã lưu!'); } catch { alert('Lỗi!'); } }} />}
 

@@ -97,6 +97,33 @@ export const trainingService = {
     },
 
     // === LEADS ===
+    getLeads: async (): Promise<Lead[]> => {
+        if (USE_REAL_API) {
+            try {
+                return await request('/training/leads');
+            } catch (e) {
+                console.warn('Backend API failed, using mock/local data', e);
+            }
+        }
+        return getLocalData('leads', []);
+    },
+
+    updateLeadStatus: async (id: string, status: string) => {
+        if (USE_REAL_API) {
+            try {
+                return await request(`/training/leads/${id}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({ status })
+                });
+            } catch (e) {
+                console.warn('Backend API failed, using mock/local data', e);
+            }
+        }
+        const leads = getLocalData('leads', []);
+        const updated = leads.map((l: any) => l.id === id ? { ...l, status } : l);
+        saveLocalData('leads', updated);
+    },
+
     submitLead: async (lead: Partial<Lead>) => {
         if (USE_REAL_API) {
             try {
@@ -112,6 +139,54 @@ export const trainingService = {
         const newLead = { ...lead, id: `local-${Date.now()}`, status: 'new', created_at: new Date().toISOString() };
         saveLocalData('leads', [...leads, newLead]);
         return newLead;
+    },
+
+    // === ADMIN COURSES ===
+    addCourse: async (course: Partial<TrainingCourse>) => {
+        if (USE_REAL_API) {
+            try {
+                return await request('/training/courses', {
+                    method: 'POST',
+                    body: JSON.stringify(course)
+                });
+            } catch (e) {
+                console.warn('Backend API failed, using mock/local data', e);
+            }
+        }
+        const courses = getLocalData('training_courses', []);
+        const newCourse = { ...course, id: `local-${Date.now()}` };
+        saveLocalData('training_courses', [...courses, newCourse]);
+    },
+
+    updateCourse: async (id: string, course: Partial<TrainingCourse>) => {
+        if (USE_REAL_API) {
+            try {
+                return await request(`/training/courses/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(course)
+                });
+            } catch (e) {
+                console.warn('Backend API failed, using mock/local data', e);
+            }
+        }
+        const courses = getLocalData('training_courses', []);
+        const updated = courses.map((c: any) => c.id === id ? { ...c, ...course } : c);
+        saveLocalData('training_courses', updated);
+    },
+
+    deleteCourse: async (id: string) => {
+        if (USE_REAL_API) {
+            try {
+                return await request(`/training/courses/${id}`, {
+                    method: 'DELETE'
+                });
+            } catch (e) {
+                console.warn('Backend API failed, using mock/local data', e);
+            }
+        }
+        const courses = getLocalData('training_courses', []);
+        const updated = courses.filter((c: any) => c.id !== id);
+        saveLocalData('training_courses', updated);
     }
 };
 

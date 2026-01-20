@@ -20,7 +20,8 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
 
     // Filter projects based on tab
     const filteredProjects = projects.filter(p => {
-        const isPublished = activeTab === 'published' && (p.status === 'published' || !p.status);
+        // Data shows status is 'active' for published projects
+        const isPublished = activeTab === 'published' && (p.status === 'published' || p.status === 'active' || !p.status);
         const isPending = activeTab === 'pending' && p.status === 'pending';
         return isPublished || isPending;
     });
@@ -29,7 +30,6 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
 
     const handlePublish = (project: any) => {
         // Publish logic: Update status to 'published'
-        // Reuse onEdit but just for status, or user enters edit mode
         onEdit({ ...project, status: 'published' });
     };
 
@@ -74,6 +74,7 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                             <label className="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
                             <select className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value={form.status || 'published'} onChange={e => setForm({ ...form, status: e.target.value })}>
                                 <option value="published">Công khai (Published)</option>
+                                <option value="active">Đang hoạt động (Active)</option>
                                 <option value="pending">Chờ duyệt (Pending)</option>
                             </select>
                         </div>

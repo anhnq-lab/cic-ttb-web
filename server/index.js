@@ -39,6 +39,7 @@ app.use('/api/contacts', require('./routes/contacts'));
 app.use('/api/pricing', require('./routes/pricing'));
 app.use('/api/settings', require('./routes/settings'));
 app.use('/api/analytics', require('./routes/analytics'));
+app.use('/api/training', require('./routes/training'));
 
 // Production Static Files & SPA Fallback
 if (isProduction) {
