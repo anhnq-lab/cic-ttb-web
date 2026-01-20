@@ -1,9 +1,10 @@
 import React from 'react';
+import type { Tool, ToolForm } from '../../types/admin';
 
 interface ToolsManagerProps {
-    tools: any[];
-    toolForm: any;
-    setToolForm: (f: any) => void;
+    tools: Tool[];
+    toolForm: ToolForm;
+    setToolForm: (f: ToolForm) => void;
     editingId: number | null;
     setEditingId: (id: number | null) => void;
     onSubmit: (e: React.FormEvent) => void;

@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ImageUploader from '../ImageUploader';
+import type { Project, ProjectForm } from '../../types/admin';
+import { validateProjectForm, handleValidationError } from '../../utils/validators';
 
 interface ProjectManagerProps {
-    projects: any[];
-    form: any;
-    setForm: (f: any) => void;
+    projects: Project[];
+    form: ProjectForm;
+    setForm: (f: ProjectForm) => void;
     editingId: string | number | null;
     setEditingId: (id: string | number | null) => void;
     onSubmit: (e: React.FormEvent) => void;
-    onEdit: (item: any) => void;
+    onEdit: (item: Project) => void;
     onDelete: (id: string | number) => void;
 }
 
 const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm, editingId, setEditingId, onSubmit, onEdit, onDelete }) => {
     const [activeTab, setActiveTab] = React.useState<'published' | 'pending'>('published');
+    const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; project: Project | null }>({
+        isOpen: false,
+        project: null
+    });
 
     // Filter projects based on tab
     const filteredProjects = projects.filter(p => {
@@ -23,9 +29,35 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
         return isPublished || isPending;
     });
 
-    const handlePublish = (project: any) => {
+    const handlePublish = (project: Project) => {
         // Publish logic: Update status to 'published'
         onEdit({ ...project, status: 'published' });
+    };
+
+    const handleSubmitWithValidation = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            // Validate form data
+            const validatedForm = validateProjectForm(form);
+
+            // Call original onSubmit with validated data
+            const fakeEvent = { ...e, target: validatedForm } as any;
+            onSubmit(fakeEvent);
+        } catch (error) {
+            handleValidationError(error);
+        }
+    };
+
+    const handleDeleteClick = (project: Project) => {
+        setDeleteConfirm({ isOpen: true, project });
+    };
+
+    const confirmDelete = () => {
+        if (deleteConfirm.project) {
+            onDelete(deleteConfirm.project.id);
+        }
+        setDeleteConfirm({ isOpen: false, project: null });
     };
 
     return (
@@ -33,7 +65,7 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
             <div className="xl:col-span-1">
                 <div className="bg-white p-6 rounded-xl shadow border border-gray-200 sticky top-4">
                     <h3 className="text-xl font-bold mb-6 text-gray-800 border-b pb-2">{editingId ? 'Chỉnh sửa Dự án' : 'Thêm Dự án mới'}</h3>
-                    <form onSubmit={onSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmitWithValidation} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Tên dự án</label>
                             <input className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required placeholder="Tên dự án" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
@@ -174,7 +206,7 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                                         <button onClick={() => handlePublish(p)} className="px-3 py-1.5 text-sm bg-green-50 text-green-600 rounded hover:bg-green-100 font-bold transition-colors">Duyệt & Đăng</button>
                                     )}
                                     <button onClick={() => onEdit(p)} className="px-3 py-1.5 text-sm bg-blue-50 text-blue-600 rounded hover:bg-blue-100 font-medium transition-colors">Sửa</button>
-                                    <button onClick={() => onDelete(p.id)} className="px-3 py-1.5 text-sm bg-red-50 text-red-600 rounded hover:bg-red-100 font-medium transition-colors">Xóa</button>
+                                    <button onClick={() => handleDeleteClick(p)} className="px-3 py-1.5 text-sm bg-red-50 text-red-600 rounded hover:bg-red-100 font-medium transition-colors">Xóa</button>
                                 </div>
                             </div>
                         </div>
@@ -187,6 +219,42 @@ const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm
                     )}
                 </div>
             </div>
+
+            {/* Confirm Dialog */}
+            {deleteConfirm.isOpen && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+                        <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0 text-red-500">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">Xác nhận xóa</h3>
+                                <p className="text-gray-600 mb-6">
+                                    Bạn có chắc muốn xóa dự án <strong>{deleteConfirm.project?.title}</strong>?
+                                    Hành động này không thể hoàn tác.
+                                </p>
+                                <div className="flex gap-3 justify-end">
+                                    <button
+                                        onClick={() => setDeleteConfirm({ isOpen: false, project: null })}
+                                        className="px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors text-sm font-medium"
+                                    >
+                                        Hủy
+                                    </button>
+                                    <button
+                                        onClick={confirmDelete}
+                                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium"
+                                    >
+                                        Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

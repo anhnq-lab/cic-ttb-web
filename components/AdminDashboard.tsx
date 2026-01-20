@@ -12,6 +12,8 @@ import PricingManager from './admin/PricingManager';
 import ProjectManager from './admin/ProjectManager';
 import TrainingManager from './admin/TrainingManager';
 import LeadManager from './admin/LeadManager';
+import ErrorBoundary from './shared/ErrorBoundary';
+import LoadingSpinner from './shared/LoadingSpinner';
 
 const AdminDashboard: React.FC = () => {
     const [activeTab, setActiveTab] = useState('analytics'); // Default to Analytics or Projects as landing
@@ -223,28 +225,68 @@ const AdminDashboard: React.FC = () => {
 
     return (
         <DashboardLayout activeTab={activeTab} setActiveTab={setActiveTab} onLogout={() => { api.logout(); setIsAuthenticated(false); }}>
-            {activeTab === 'analytics' && <AnalyticsManager stats={stats} insight={insight} loadingInsight={loadingInsight} onGetInsight={async () => {
-                setLoadingInsight(true);
-                try { const res = await api.getAnalyticsInsight(); setInsight(res.insight); } catch { alert('Lỗi AI'); } finally { setLoadingInsight(false); }
-            }} />}
+            {activeTab === 'analytics' && (
+                <ErrorBoundary componentName="AnalyticsManager">
+                    <AnalyticsManager stats={stats} insight={insight} loadingInsight={loadingInsight} onGetInsight={async () => {
+                        setLoadingInsight(true);
+                        try { const res = await api.getAnalyticsInsight(); setInsight(res.insight); } catch { alert('Lỗi AI'); } finally { setLoadingInsight(false); }
+                    }} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'projects' && <ProjectManager projects={projects} form={projectForm} setForm={setProjectForm} editingId={editingProjectId} setEditingId={setEditingProjectId} onSubmit={handleProjectSubmit} onEdit={(p) => { setProjectForm(p); setEditingProjectId(p.id); }} onDelete={async (id: string | number) => { if (confirm('Xóa?')) { await api.deleteProject(id); api.getProjects().then(setProjects); } }} />}
+            {activeTab === 'projects' && (
+                <ErrorBoundary componentName="ProjectManager">
+                    <ProjectManager projects={projects} form={projectForm} setForm={setProjectForm as any} editingId={editingProjectId} setEditingId={setEditingProjectId} onSubmit={handleProjectSubmit} onEdit={(p) => { setProjectForm(p as any); setEditingProjectId(p.id); }} onDelete={async (id: string | number) => { if (confirm('Xóa?')) { await api.deleteProject(id); api.getProjects().then(setProjects); } }} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'news' && <NewsManager newsList={newsList} form={newsForm} setForm={setNewsForm} editingId={editingNewsId} setEditingId={setEditingNewsId} onSubmit={handleNewsSubmit} onEdit={(n) => { setNewsForm(n); setEditingNewsId(n.id); setIsEditingNews(true); }} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteNews(id); api.getNews().then(setNewsList); } }} isGenerating={isGenerating} aiTopic={aiTopic} setAiTopic={setAiTopic} onGenerate={handleGenerateNews} onSEO={handleGenerateSEO} onMarketingKit={handleCreateMarketingKit} onCancelEdit={() => { setIsEditingNews(false); setEditingNewsId(null); }} />}
+            {activeTab === 'news' && (
+                <ErrorBoundary componentName="NewsManager">
+                    <NewsManager newsList={newsList} form={newsForm} setForm={setNewsForm} editingId={editingNewsId} setEditingId={setEditingNewsId} onSubmit={handleNewsSubmit} onEdit={(n) => { setNewsForm(n); setEditingNewsId(n.id); setIsEditingNews(true); }} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteNews(id); api.getNews().then(setNewsList); } }} isGenerating={isGenerating} aiTopic={aiTopic} setAiTopic={setAiTopic} onGenerate={handleGenerateNews} onSEO={handleGenerateSEO} onMarketingKit={handleCreateMarketingKit} onCancelEdit={() => { setIsEditingNews(false); setEditingNewsId(null); }} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'library' && <LibraryManager library={library} form={libraryForm} setForm={setLibraryForm} editingId={editingLibId} setEditingId={setEditingLibId} onSubmit={handleLibrarySubmit} onEdit={(l) => { setLibraryForm(l); setEditingLibId(l.id); }} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteLibrary(id); api.getLibrary().then(setLibrary); } }} />}
+            {activeTab === 'library' && (
+                <ErrorBoundary componentName="LibraryManager">
+                    <LibraryManager library={library} form={libraryForm} setForm={setLibraryForm as any} editingId={editingLibId} setEditingId={setEditingLibId} onSubmit={handleLibrarySubmit} onEdit={(l) => { setLibraryForm(l as any); setEditingLibId(l.id); }} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteLibrary(id); api.getLibrary().then(setLibrary); } }} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'contacts' && <ContactManager contacts={contacts} onDelete={handleDeleteContact} />}
+            {activeTab === 'contacts' && (
+                <ErrorBoundary componentName="ContactManager">
+                    <ContactManager contacts={contacts} onDelete={handleDeleteContact} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'tools' && <ToolsManager tools={tools} toolForm={toolForm} setToolForm={setToolForm} editingId={editingToolId} setEditingId={setEditingToolId} onSubmit={handleToolSubmit} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteTool(id); api.getTools().then(setTools); } }} />}
+            {activeTab === 'tools' && (
+                <ErrorBoundary componentName="ToolsManager">
+                    <ToolsManager tools={tools} toolForm={toolForm} setToolForm={setToolForm as any} editingId={editingToolId} setEditingId={setEditingToolId} onSubmit={handleToolSubmit} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteTool(id); api.getTools().then(setTools); } }} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'pricing' && <PricingManager pricing={pricing} pricingForm={pricingForm} setPricingForm={setPricingForm} editingId={editingPricingId} setEditingId={setEditingPricingId} onSubmit={handlePricingSubmit} />}
+            {activeTab === 'pricing' && (
+                <ErrorBoundary componentName="PricingManager">
+                    <PricingManager pricing={pricing} pricingForm={pricingForm} setPricingForm={setPricingForm as any} editingId={editingPricingId} setEditingId={setEditingPricingId} onSubmit={handlePricingSubmit} />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'training' && <TrainingManager />}
+            {activeTab === 'training' && (
+                <ErrorBoundary componentName="TrainingManager">
+                    <TrainingManager />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'training_leads' && <LeadManager />}
+            {activeTab === 'training_leads' && (
+                <ErrorBoundary componentName="LeadManager">
+                    <LeadManager />
+                </ErrorBoundary>
+            )}
 
-            {activeTab === 'settings' && <SettingsManager settings={settings} setSettings={setSettings} onSubmit={async (e) => { e.preventDefault(); try { await api.saveSettings(settings); alert('Đã lưu!'); } catch { alert('Lỗi!'); } }} />}
+            {activeTab === 'settings' && (
+                <ErrorBoundary componentName="SettingsManager">
+                    <SettingsManager settings={settings} setSettings={setSettings} onSubmit={async (e) => { e.preventDefault(); try { await api.saveSettings(settings); alert('Đã lưu!'); } catch { alert('Lỗi!'); } }} />
+                </ErrorBoundary>
+            )}
 
             {/* Reuse Social Modal logic here if needed, or move to NewsManager */}
             {showSocialModal && socialKit && (

@@ -62,7 +62,17 @@ router.post('/login', async (req, res) => {
 
         // Secure Admin Login
         const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
-        const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'admin123'; // Fallback only for dev
+        const ADMIN_PASS = process.env.ADMIN_PASSWORD;
+
+        // Security: Require ADMIN_PASSWORD to be set in environment
+        if (!ADMIN_PASS) {
+            console.error('❌ CRITICAL: ADMIN_PASSWORD environment variable is not set!');
+            console.error('Please set ADMIN_PASSWORD in your .env file before starting the server.');
+            return res.status(500).json({
+                error: 'Server configuration error. Please contact administrator.',
+                details: 'Admin authentication is not properly configured.'
+            });
+        }
 
         console.log(`Checking Admin: Input=${username}, Expected=${ADMIN_USER}, PassMatch=${password === ADMIN_PASS}`);
 
@@ -73,9 +83,9 @@ router.post('/login', async (req, res) => {
                 const token = jwt.sign({ id: 999, username: 'admin', role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
                 console.log("Master Admin Login Success");
                 return res.json({ token, user: { id: 999, username: 'admin', role: 'admin' } });
-            } catch (err) {
-                console.error("JWT Sign Error:", err);
-                return res.status(500).json({ error: "Internal Auth Error: " + err.message });
+            } catch (error) {
+                console.error("JWT Error:", error);
+                return res.status(500).json({ error: 'Token generation failed' });
             }
         }
 

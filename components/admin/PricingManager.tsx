@@ -1,9 +1,10 @@
 import React from 'react';
+import type { PricingPackage, PricingForm } from '../../types/admin';
 
 interface PricingManagerProps {
-    pricing: any[];
-    pricingForm: any;
-    setPricingForm: (f: any) => void;
+    pricing: PricingPackage[];
+    pricingForm: PricingForm;
+    setPricingForm: (f: PricingForm) => void;
     editingId: number | null;
     setEditingId: (id: number | null) => void;
     onSubmit: (e: React.FormEvent) => void;

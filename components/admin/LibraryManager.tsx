@@ -1,13 +1,14 @@
 import React from 'react';
+import type { LibraryItem, LibraryForm } from '../../types/admin';
 
 interface LibraryManagerProps {
-    library: any[];
-    form: any;
-    setForm: (f: any) => void;
+    library: LibraryItem[];
+    form: LibraryForm;
+    setForm: (f: LibraryForm) => void;
     editingId: number | null;
     setEditingId: (id: number | null) => void;
     onSubmit: (e: React.FormEvent) => void;
-    onEdit: (item: any) => void;
+    onEdit: (item: LibraryItem) => void;
     onDelete: (id: number) => void;
 }
 
@@ -127,9 +128,9 @@ const LibraryManager: React.FC<LibraryManagerProps> = ({ library, form, setForm,
                                 <td className="px-6 py-4">
                                     <div className="flex flex-col gap-1">
                                         <span className={`w-fit px-2 py-0.5 rounded text-xs font-bold border ${item.type === 'featured' ? 'bg-orange-50 text-orange-700 border-orange-200' :
-                                                item.type === 'infographic' ? 'bg-purple-50 text-purple-700 border-purple-200' :
-                                                    item.type === 'legal' ? 'bg-red-50 text-red-700 border-red-200' :
-                                                        'bg-blue-50 text-blue-700 border-blue-200'
+                                            item.type === 'infographic' ? 'bg-purple-50 text-purple-700 border-purple-200' :
+                                                item.type === 'legal' ? 'bg-red-50 text-red-700 border-red-200' :
+                                                    'bg-blue-50 text-blue-700 border-blue-200'
                                             }`}>
                                             {item.type.toUpperCase()}
                                         </span>
