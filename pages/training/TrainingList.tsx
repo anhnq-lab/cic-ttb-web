@@ -112,8 +112,8 @@ const TrainingList: React.FC = () => {
                                 key={btn.id}
                                 onClick={() => setActiveFilter(btn.id as typeof activeFilter)}
                                 className={`px-5 py-2 rounded-full font-medium text-sm transition-all ${activeFilter === btn.id
-                                        ? 'bg-[#1a237e] text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    ? 'bg-[#1a237e] text-white shadow-md'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
                             >
                                 {btn.label} {btn.count > 0 && <span className="opacity-70">({btn.count})</span>}
@@ -189,6 +189,58 @@ const TrainingList: React.FC = () => {
                         ))}
                     </div>
                 )}
+            </div>
+
+            {/* Testimonials Section */}
+            <div className="bg-white py-20">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Cảm nhận từ Học viên</h2>
+                        <div className="w-20 h-1.5 bg-yellow-400 mx-auto rounded-full"></div>
+                        <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
+                            Hơn 500+ học viên đã tham gia và thay đổi tư duy làm việc với BIM sau các khóa đào tạo tại CIC.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                name: "Nguyễn Văn Hùng",
+                                role: "BIM Manager - Vinaconex",
+                                comment: "Khóa học BIM Coordinator rất thực tế. Giảng viên trình bày dễ hiểu, giúp chúng tôi áp dụng được ngay vào dự án thực tế của công ty.",
+                                stars: 5
+                            },
+                            {
+                                name: "Trần Thị Lan",
+                                role: "Kiến trúc sư - Archetype Group",
+                                comment: "Lộ trình đào tạo chuẩn ISO 19650 giúp tôi hệ thống hóa lại toàn bộ kiến thức. Tài liệu hướng dẫn rất chi tiết và đầy đủ.",
+                                stars: 5
+                            },
+                            {
+                                name: "Lê Minh Đức",
+                                role: "Digital Engineer - Coteccons",
+                                comment: "CIC Tools giúp tiết kiệm 50% thời gian triển khai. Rất cảm ơn đội ngũ CIC đã hỗ trợ nhiệt tình trong suốt khóa học.",
+                                stars: 5
+                            }
+                        ].map((t, i) => (
+                            <div key={i} className="bg-gray-50 p-8 rounded-2xl border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-all">
+                                <div className="text-yellow-400 flex mb-4">
+                                    {[...Array(t.stars)].map((_, s) => (
+                                        <svg key={s} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                    ))}
+                                </div>
+                                <p className="text-gray-700 italic mb-6">"{t.comment}"</p>
+                                <div>
+                                    <div className="font-bold text-gray-900">{t.name}</div>
+                                    <div className="text-sm text-[#1a237e] font-medium">{t.role}</div>
+                                </div>
+                                <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                    <svg className="w-24 h-24 text-[#1a237e]" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H12.017V21H14.017ZM6.017 21L6.017 18C6.017 16.8954 6.91243 16 8.017 16H11.017C11.5693 16 12.017 15.5523 12.017 15V9C12.017 8.44772 11.5693 8 11.017 8H7.017C6.46472 8 6.017 8.44772 6.017 9V12C6.017 12.5523 5.5693 13 5.01697 13H4.01697V21H6.017Z" /></svg>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
             {/* CTA Section */}
