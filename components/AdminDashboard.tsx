@@ -90,7 +90,6 @@ const AdminDashboard: React.FC = () => {
     // --- Data Loading ---
     useEffect(() => {
         if (isAuthenticated) {
-            console.log('[Admin] Authenticated. Loading data for tab:', activeTab);
             if (activeTab === 'contacts') api.getContacts().then(setContacts).catch(err => console.error('[Admin] Error loading contacts:', err));
             if (activeTab === 'news') api.getNews().then(setNewsList).catch(err => console.error('[Admin] Error loading news:', err));
             if (activeTab === 'settings') api.getSettings().then(d => d && setSettings(d as any)).catch(err => console.error('[Admin] Error loading settings:', err));
@@ -98,17 +97,7 @@ const AdminDashboard: React.FC = () => {
             if (activeTab === 'library') api.getLibrary().then(setLibrary).catch(err => console.error('[Admin] Error loading library:', err));
             if (activeTab === 'tools') api.getTools().then(setTools).catch(err => console.error('[Admin] Error loading tools:', err));
             if (activeTab === 'pricing') api.getPricing().then(setPricing).catch(err => console.error('[Admin] Error loading pricing:', err));
-            if (activeTab === 'projects') {
-                console.log('[Admin] Calling api.getProjects()...');
-                api.getProjects().then(data => {
-                    console.log('[Admin] Projects received:', data);
-                    setProjects(data);
-                }).catch(err => {
-                    console.error('[Admin] Error loading projects:', err);
-                });
-            }
-        } else {
-            console.log('[Admin] Not authenticated yet.');
+            if (activeTab === 'projects') api.getProjects().then(setProjects).catch(err => console.error('[Admin] Error loading projects:', err));
         }
     }, [isAuthenticated, activeTab]);
 

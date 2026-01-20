@@ -2,11 +2,12 @@
 // Automatically detects environment and uses real backend or localStorage fallback
 
 // Use Mock API if on GitHub Pages (static site) or explicitly set
+// Use Vercel API
 const isGitHubPages = window.location.hostname.includes('github.io');
-const RENDER_API_URL = 'https://cic-ttb-web.onrender.com/api';
+const VERCEL_API_URL = 'https://cic-ttb-web.vercel.app/api'; // Replace with your actual Vercel URL
 
-export const API_BASE_URL = isGitHubPages ? RENDER_API_URL : '/api';
-const USE_REAL_API = true; // Always attempt to use real API now that we have Render
+export const API_BASE_URL = import.meta.env.VITE_API_URL || (isGitHubPages ? VERCEL_API_URL : '/api');
+const USE_REAL_API = true;
 
 // Helper for localStorage (development fallback)
 const getData = (key: string, defaultValue: any) => {
@@ -422,18 +423,12 @@ export const api = {
         return Promise.resolve(data);
     },
 
-    // ===== PROJECTS =====
     getProjects: async () => {
         if (USE_REAL_API) {
             try {
-                console.log('[API] Fetching projects from:', `${API_BASE_URL}/projects`);
-                const data = await apiRequest('/projects');
-                console.log('[API] Projects response:', data);
-                console.log('[API] Projects count:', data?.length || 0);
-                return data;
+                return await apiRequest('/projects');
             } catch (error) {
                 console.error('[API] Failed to fetch projects:', error);
-                // Fallback to empty array instead of throwing
                 return [];
             }
         }

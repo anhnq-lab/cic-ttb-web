@@ -10,14 +10,6 @@ try {
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY;
 
-// DEBUG LOGGING (Masked)
-const hasUrl = !!supabaseUrl;
-const hasKey = !!supabaseKey;
-console.log('--------------------------------------------------');
-console.log(`[Supabase Config] URL Found: ${hasUrl}, Key Found: ${hasKey}`);
-if (hasUrl) console.log(`[Supabase Config] CURRENT URL START: ${supabaseUrl.substring(0, 30)}...`);
-console.log('--------------------------------------------------');
-
 if (!supabaseUrl || !supabaseKey) {
     console.error('❌ CRITICAL: Supabase URL or Key is missing in environment variables!');
 }
