@@ -64,6 +64,8 @@ router.post('/login', async (req, res) => {
         const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
         const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'admin123'; // Fallback only for dev
 
+        console.log(`Checking Admin: Input=${username}, Expected=${ADMIN_USER}, PassMatch=${password === ADMIN_PASS}`);
+
         if (username === ADMIN_USER && password === ADMIN_PASS) {
             console.log("Attempting Master Admin Login");
             try {
