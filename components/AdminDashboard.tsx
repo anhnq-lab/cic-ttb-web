@@ -211,7 +211,10 @@ const AdminDashboard: React.FC = () => {
             setEditingProjectId(null);
             setProjectForm({ title: '', client: '', location: '', service_type: 'Scan-to-BIM', description: '', challenge: '', solution: '', result: '', images: [], completion_date: '', content: '', scope_of_work: '', status: 'published' });
             api.getProjects().then(setProjects);
-        } catch { alert('Lỗi lưu dự án'); }
+        } catch (err: any) {
+            console.error('[Admin] Error saving project:', err);
+            alert('Lỗi lưu dự án: ' + (err.message || 'Lỗi không xác định'));
+        }
     };
 
     if (!isAuthenticated) {

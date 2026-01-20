@@ -98,7 +98,10 @@ router.post('/', authenticateToken, async (req, res) => {
         }])
         .select(); // Select to return the created row
 
-    if (error) return res.status(500).json({ error: error.message });
+    if (error) {
+        console.error('[Backend] Error creating project:', error);
+        return res.status(500).json({ error: error.message });
+    }
     res.json(data[0]);
 });
 
