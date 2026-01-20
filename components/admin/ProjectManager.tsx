@@ -15,10 +15,17 @@ interface ProjectManagerProps {
 const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm, editingId, setEditingId, onSubmit, onEdit, onDelete }) => {
     const [activeTab, setActiveTab] = React.useState<'published' | 'pending'>('published');
 
+    console.log('[ProjectManager] Render with projects count:', projects?.length);
+    console.log('[ProjectManager] Sample project status:', projects?.[0]?.status);
+
     // Filter projects based on tab
-    const filteredProjects = projects.filter(p =>
-        activeTab === 'published' ? (p.status === 'published' || !p.status) : p.status === 'pending'
-    );
+    const filteredProjects = projects.filter(p => {
+        const isPublished = activeTab === 'published' && (p.status === 'published' || !p.status);
+        const isPending = activeTab === 'pending' && p.status === 'pending';
+        return isPublished || isPending;
+    });
+
+    console.log('[ProjectManager] Filtered projects count:', filteredProjects.length);
 
     const handlePublish = (project: any) => {
         // Publish logic: Update status to 'published'

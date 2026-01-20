@@ -88,6 +88,7 @@ const AdminDashboard: React.FC = () => {
     // --- Data Loading ---
     useEffect(() => {
         if (isAuthenticated) {
+            console.log('[Admin] Authenticated. Loading data for tab:', activeTab);
             if (activeTab === 'contacts') api.getContacts().then(setContacts).catch(console.error);
             if (activeTab === 'news') api.getNews().then(setNewsList).catch(console.error);
             if (activeTab === 'settings') api.getSettings().then(d => d && setSettings(d as any)).catch(console.error);
@@ -95,7 +96,17 @@ const AdminDashboard: React.FC = () => {
             if (activeTab === 'library') api.getLibrary().then(setLibrary).catch(console.error);
             if (activeTab === 'tools') api.getTools().then(setTools).catch(console.error);
             if (activeTab === 'pricing') api.getPricing().then(setPricing).catch(console.error);
-            if (activeTab === 'projects') api.getProjects().then(setProjects).catch(console.error);
+            if (activeTab === 'projects') {
+                console.log('[Admin] Calling api.getProjects()...');
+                api.getProjects().then(data => {
+                    console.log('[Admin] Projects received:', data);
+                    setProjects(data);
+                }).catch(err => {
+                    console.error('[Admin] Error loading projects:', err);
+                });
+            }
+        } else {
+            console.log('[Admin] Not authenticated yet.');
         }
     }, [isAuthenticated, activeTab]);
 
