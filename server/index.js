@@ -2,12 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
+try {
+    require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
+} catch (e) {
+    console.warn("Dotenv load failed (expected in production if using Vercel env vars)");
+}
+
 const setupSecurity = require('./middleware/security');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
+
+console.log("Starting CIC Backend..."); // Debug log
 
 // Middleware
 app.use(cors({
@@ -63,6 +70,12 @@ if (isProduction) {
         });
     }
 }
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error("Unhandled Server Error:", err);
+    res.status(500).json({ error: "Internal Server Error", message: err.message, stack: isProduction ? null : err.stack });
+});
 
 // Start Server (Only if not running in Vercel/Serverless environment)
 if (require.main === module) {
