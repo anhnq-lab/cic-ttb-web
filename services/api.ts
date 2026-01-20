@@ -425,7 +425,17 @@ export const api = {
     // ===== PROJECTS =====
     getProjects: async () => {
         if (USE_REAL_API) {
-            return apiRequest('/projects');
+            try {
+                console.log('[API] Fetching projects from:', `${API_BASE_URL}/projects`);
+                const data = await apiRequest('/projects');
+                console.log('[API] Projects response:', data);
+                console.log('[API] Projects count:', data?.length || 0);
+                return data;
+            } catch (error) {
+                console.error('[API] Failed to fetch projects:', error);
+                // Fallback to empty array instead of throwing
+                return [];
+            }
         }
         return Promise.resolve(getData('projects', []));
     },
