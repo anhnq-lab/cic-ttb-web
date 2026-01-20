@@ -60,11 +60,12 @@ const AdminDashboard: React.FC = () => {
     const [pricingForm, setPricingForm] = useState({ name: '', price: '', period: '', description: '', features: '', ctaText: '' });
 
     // Projects
-    const [editingProjectId, setEditingProjectId] = useState<number | null>(null);
+    const [editingProjectId, setEditingProjectId] = useState<string | number | null>(null);
     const [projectForm, setProjectForm] = useState({
         title: '', client: '', location: '', service_type: 'Scan-to-BIM',
         description: '', challenge: '', solution: '', result: '',
-        images: [] as string[], completion_date: ''
+        images: [] as string[], completion_date: '',
+        content: '', scope_of_work: '', status: 'published'
     });
 
     // Settings
@@ -208,7 +209,7 @@ const AdminDashboard: React.FC = () => {
             if (editingProjectId) await api.updateProject(editingProjectId, projectForm);
             else await api.addProject(projectForm);
             setEditingProjectId(null);
-            setProjectForm({ title: '', client: '', location: '', service_type: 'Scan-to-BIM', description: '', challenge: '', solution: '', result: '', images: [], completion_date: '' });
+            setProjectForm({ title: '', client: '', location: '', service_type: 'Scan-to-BIM', description: '', challenge: '', solution: '', result: '', images: [], completion_date: '', content: '', scope_of_work: '', status: 'published' });
             api.getProjects().then(setProjects);
         } catch { alert('Lỗi lưu dự án'); }
     };
@@ -224,7 +225,7 @@ const AdminDashboard: React.FC = () => {
                 try { const res = await api.getAnalyticsInsight(); setInsight(res.insight); } catch { alert('Lỗi AI'); } finally { setLoadingInsight(false); }
             }} />}
 
-            {activeTab === 'projects' && <ProjectManager projects={projects} form={projectForm} setForm={setProjectForm} editingId={editingProjectId} setEditingId={setEditingProjectId} onSubmit={handleProjectSubmit} onEdit={(p) => { setProjectForm(p); setEditingProjectId(p.id); }} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteProject(id); api.getProjects().then(setProjects); } }} />}
+            {activeTab === 'projects' && <ProjectManager projects={projects} form={projectForm} setForm={setProjectForm} editingId={editingProjectId} setEditingId={setEditingProjectId} onSubmit={handleProjectSubmit} onEdit={(p) => { setProjectForm(p); setEditingProjectId(p.id); }} onDelete={async (id: string | number) => { if (confirm('Xóa?')) { await api.deleteProject(id); api.getProjects().then(setProjects); } }} />}
 
             {activeTab === 'news' && <NewsManager newsList={newsList} form={newsForm} setForm={setNewsForm} editingId={editingNewsId} setEditingId={setEditingNewsId} onSubmit={handleNewsSubmit} onEdit={(n) => { setNewsForm(n); setEditingNewsId(n.id); setIsEditingNews(true); }} onDelete={async (id) => { if (confirm('Xóa?')) { await api.deleteNews(id); api.getNews().then(setNewsList); } }} isGenerating={isGenerating} aiTopic={aiTopic} setAiTopic={setAiTopic} onGenerate={handleGenerateNews} onSEO={handleGenerateSEO} onMarketingKit={handleCreateMarketingKit} onCancelEdit={() => { setIsEditingNews(false); setEditingNewsId(null); }} />}
 

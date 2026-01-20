@@ -82,16 +82,16 @@ router.post('/', authenticateToken, async (req, res) => {
     const { data, error } = await supabase
         .from('projects')
         .insert([{
-            title,
-            client,
+            name: title,
+            investor: client,
             location,
-            service_type,
+            type: service_type,
             description,
             challenge,
             solution,
             result,
             images: imagesJson,
-            completion_date,
+            endDate: completion_date,
             content,
             scope_of_work,
             status: status || 'published'
@@ -110,16 +110,16 @@ router.put('/:id', authenticateToken, async (req, res) => {
     const { data, error } = await supabase
         .from('projects')
         .update({
-            title,
-            client,
+            name: title,
+            investor: client,
             location,
-            service_type,
+            type: service_type,
             description,
             challenge,
             solution,
             result,
             images: imagesJson,
-            completion_date,
+            endDate: completion_date,
             content,
             scope_of_work,
             status
@@ -171,14 +171,14 @@ router.post('/sync-webhook', async (req, res) => {
         // Map external fields to our schema. 
         // Note: We use 'source_id' to prevent duplicate imports of the same record.
         const mappedProject = {
-            title: projectData.title || projectData.name || 'Synced Project',
+            name: projectData.title || projectData.name || 'Synced Project',
             description: projectData.description || '',
             content: projectData.content || projectData.body || '',
             scope_of_work: projectData.scope_of_work || projectData.scope || '',
             location: projectData.location || '',
-            client: projectData.client || '',
-            completion_date: projectData.completion_date || projectData.date || null,
-            service_type: projectData.service_type || 'Scan-to-BIM',
+            investor: projectData.client || '',
+            endDate: projectData.completion_date || projectData.date || null,
+            type: projectData.service_type || 'Scan-to-BIM',
             status: 'pending', // Always pending
             source_id: projectData.id ? String(projectData.id) : null,
             // Handle Images: If source provides array, stringify it. If string, use as is.

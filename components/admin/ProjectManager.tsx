@@ -5,11 +5,11 @@ interface ProjectManagerProps {
     projects: any[];
     form: any;
     setForm: (f: any) => void;
-    editingId: number | null;
-    setEditingId: (id: number | null) => void;
+    editingId: string | number | null;
+    setEditingId: (id: string | number | null) => void;
     onSubmit: (e: React.FormEvent) => void;
     onEdit: (item: any) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string | number) => void;
 }
 
 const ProjectManager: React.FC<ProjectManagerProps> = ({ projects, form, setForm, editingId, setEditingId, onSubmit, onEdit, onDelete }) => {
