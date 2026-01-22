@@ -1,0 +1,262 @@
+[
+    {
+        "title": "Terra An Hưng",
+        "client": "Công ty Cổ phần Ecoba Việt Nam",
+        "location": "Hà Đông, Hà Nội",
+        "scope_of_work": "Dựng 3D; Kiểm soát chất lượng",
+        "description": "Diện tích: 62.610 m2",
+        "completion_date": "2020-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Chung cư Phúc Đạt Connect 2",
+        "client": "Công ty TNHH Phúc Đạt Connect 2",
+        "location": "Đông Hòa, Dĩ An, Bình Dương",
+        "scope_of_work": "Dựng mô hình thiết kế thi công; Xuất khối lượng từ mô hình; Hỗ trợ Chủ đầu tư kiểm soát khối lượng đấu thầu lựa chọn Nhà thầu thi công",
+        "description": "Diện tích: 71.320 m2",
+        "completion_date": "2020-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Khu nhà ở và Vui chơi giải trí Tư Đình",
+        "client": "Công ty Cổ phần Đầu tư Him Lam BC",
+        "location": "Long Biên, Hà Nội",
+        "scope_of_work": "Dựng mô hình thiết kế kỹ thuật; Phối hợp mô hình, kiểm tra va chạm; Xuất khối lượng chi tiết từ mô hình",
+        "description": "Diện tích: 48.000 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Hệ thống thoát nước & xử lý nước thải TP Sơn La",
+        "client": "BQL Dự án Hệ thống thoát nước và Xử lý nước thải TP Sơn La",
+        "location": "Thành phố Sơn La, tỉnh Sơn La",
+        "scope_of_work": "Khảo sát quy trình quản lý vận hành; Lập mô hình hoàn công công trình; Cập nhật thông tin tài sản phục vụ vận hành; Chuyển giao kỹ năng sử dụng mô hình BIM trong công tác vận hành",
+        "description": "Địa bàn 01 xã, 05 phường của TP. Sơn La, 01 xã của H. Mường La",
+        "completion_date": "2022-01-01",
+        "status": "published",
+        "service_type": "Digital Twins"
+    },
+    {
+        "title": "Dự án Kè Nậm La",
+        "client": "BQL Dự án ĐTXD các công trình NN - PTNT",
+        "location": "Thành phố Sơn La, tỉnh Sơn La",
+        "scope_of_work": "Dựng mô hình hoàn công; Nhập thông tin vận hành tài sản",
+        "description": "Diện tích: 7.306 m",
+        "completion_date": "2023-01-01",
+        "status": "published",
+        "service_type": "Digital Twins"
+    },
+    {
+        "title": "Đường Xô Viết Nghệ Tĩnh kéo dài về phía Đông",
+        "client": "Ban QLDA Đầu tư Xây dựng công trình giao thông tỉnh Hà Tĩnh",
+        "location": "Thành phố Hà Tĩnh và Huyện Thạch Hà",
+        "scope_of_work": "Thẩm tra mô hình thông tin công trình (BIM)",
+        "description": "Điểm đầu: Km0+000 (nút giao với đường Nguyễn Công Trứ) thuộc thành phố Hà Tĩnh - Điểm cuối: Km6+645 (Km29-QL.15B hiện tại) thuộc xã Thạch Lạc, huyện Thạch Hà",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Verification"
+    },
+    {
+        "title": "Dự án số 10- Nhà Xưởng Bình Dương",
+        "client": "Công ty TNHH MTV Phát triển công nghiệp & hậu cần BW Tân Uyên",
+        "location": "Số 2, VSIP II-A, số 10, p.Vĩnh Tân, Tân Uyên, Bình Dương",
+        "scope_of_work": "Dựng mô hình; Phối hợp mô hình, kiểm tra va chạm; Tạo lập mô hình hoàn công; Nhập thông tin tài sản tạo lập mô hình thông tin tài sản",
+        "description": "Diện tích: 14.564 m2",
+        "completion_date": "2020-01-01",
+        "status": "published",
+        "service_type": "Digital Twins"
+    },
+    {
+        "title": "KCN Thuận Thành I - Bắc Ninh",
+        "client": "Tổng công ty Viglacera – CTCP",
+        "location": "Thị xã Thuận Thành, tỉnh Bắc Ninh",
+        "scope_of_work": "Khảo sát quy trình quản lý vận hành; lập mô hình hoàn công; cập nhật thông tin tài sản phục vụ vận hành; chuyển giao kỹ năng sử dụng mô hình BIM trong công tác vận hành",
+        "description": "Diện tích: 262.7 ha",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "Digital Twins"
+    },
+    {
+        "title": "Dự án số 8- Nhà Xưởng Bình Dương",
+        "client": "Công ty TNHH MTV Phát triển công nghiệp BW Thới Hòa",
+        "location": "Lô A3, Đường NA2, KCN Thời Hòa, Thới Hòa, Bến Cát, Bình Dương",
+        "scope_of_work": "Dựng mô hình thiết kế; Phối hợp mô hình, kiểm tra va chạm; Dựng mô hình thi công; Xuất bản vẽ Shop; Tạo lập mô hình hoàn công; Nhập thông tin tài sản",
+        "description": "Diện tích: 9.5 ha",
+        "completion_date": "2021-01-01",
+        "status": "published",
+        "service_type": "Digital Twins"
+    },
+    {
+        "title": "Đại học Cần Thơ",
+        "client": "Cơ quan hợp tác quốc tế Nhật Bản (JICA)",
+        "location": "Đường 3-2, P. Xuân Khánh, Q. Ninh Kiều, TP. Cần Thơ",
+        "scope_of_work": "Dựng mô hình giai đoạn thiết kế bản vẽ thi công; Kiểm tra va chạm; Phối hợp xử lý các va chạm mô hình; Xuất bản vẽ từ mô hình",
+        "description": "Diện tích: 31.600 m2",
+        "completion_date": "2020-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Trung tâm Nghiên cứu Tiên Tiến- ĐH Quốc Gia Hồ Chí Minh",
+        "client": "BQL Dự án Quốc Tế Đại học Quốc gia TP HCM",
+        "location": "P.Đông Hòa - TP Dĩ An - Tỉnh Bình Dương",
+        "scope_of_work": "Dựng hình thiết kế cơ sở; Phối hợp mô hình, kiểm tra va chạm; Xuất khối lượng chính từ mô hình",
+        "description": "Diện tích: 37.791 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Sân bay Quốc tế Phnom Penh và Trạm Kiểm soát Không lưu",
+        "client": "Công ty TNHH Đầu tư Sân bay Campuchia",
+        "location": "Phnom Pênh, Campuchia",
+        "scope_of_work": "Cập nhật mô hình thi công từ mô hình thiết kế; Phối hợp mô hình, kiểm tra va chạm; Xuất bản vẽ Shop; Tạo dựng mô hình hoàn công",
+        "description": "Diện tích: 21.300 m2",
+        "completion_date": "2022-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Bệnh viện Nhân dân Gia Định",
+        "client": "Công ty Cổ phần Tập đoàn xây dựng Thành Đô",
+        "location": "01 Nơ Trang Long, phường 7, Bình Thạnh, Hồ Chí Minh",
+        "scope_of_work": "Dựng mô hình giai đoạn thi công; Phối hợp mô hình, kiểm tra va chạm; Xuất bản vẽ Shop",
+        "description": "Diện tích: 70.200 m2",
+        "completion_date": "2022-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Bệnh viện Đa khoa Củ Chi",
+        "client": "BQL Dự án ĐTXD các công trình dân dụng & công nghiệp",
+        "location": "9A Nguyễn Văn Hoài, Ấp Bàu Tre 2, Củ Chi, Hồ Chí Minh",
+        "scope_of_work": "Dựng mô hình giai đoạn thi công; Phối hợp mô hình, kiểm tra va chạm ; Xuất bản vẽ",
+        "description": "Diện tích: 84.500 m2",
+        "completion_date": "2021-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "K8 - CT1 - Khu vực Trung tâm KĐT Tây Hồ Tây",
+        "client": "Công ty TNHH Phát triển THT",
+        "location": "Xuân La, Tây Hồ, Hà Nội",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn TKCS, TKKT, TKTC; Phối hợp mô hình, kiểm tra va chạm; Diễn họa thi công; Xuất khối lượng chính từ mô hình; Xuất bản vẽ từ mô hình, Đệ trình hồ sơ BIM lên Bộ Xây Dựng",
+        "description": "Diện tích: 70.200 m2",
+        "completion_date": "2022-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "K8 - HH1 Thuộc khu vực trung tâm KĐT Tây Hồ Tây",
+        "client": "Công ty TNHH Phát triển THT",
+        "location": "K8-HH1- Trung tâm KĐT Hồ Tây, Xuân La, Tây Hồ, Hà Nội",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn thiết kế cơ sở, thiết kế kỹ thuật, thiết kế thi công; Phối hợp mô hình, kiểm tra va chạm; Diễn họa thi công; Xuất khối lượng chính từ mô hình",
+        "description": "Diện tích: 83.093 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Khu trung tâm KĐT Tây Hồ Tây Ô K2CT1",
+        "client": "Công ty TNHH Phát triển THT",
+        "location": "K2-CT1, Khu trung tâm KĐT Tây Hồ Tây, Xuân La, Tây Hồ, Hà Nội",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn thiết kế cơ sở, thiết kế kỹ thuật, thiết kế thi công; Phối hợp mô hình, kiểm tra va chạm; Diễn họa thi công; Xuất khối lượng chính từ mô hình; Xuất bản vẽ từ mô hình, Đệ trình hồ sơ BIM lên Bộ Xây Dựng",
+        "description": "Diện tích: 136.068 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Global Bussines Center",
+        "client": "Công ty Cổ phần Địa ốc Dầu khí Viễn thông",
+        "location": "Lô E1.2, Phạm Hùng, Mỹ Đình 1, Nam Từ Liêm, Hà Nội",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn thiết kế cơ sở, thiết kế kỹ thuật, thiết kế thi công; Diễn họa thi công; Video Marketing; Phối hợp mô hình, kiểm tra va chạm; Xuất khối lượng chính từ mô hình",
+        "description": "Diện tích: 114.040 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Lotte Eco Smart city Thủ Thiêm số 2-6",
+        "client": "Công ty TNHH Lotte Properties HCMC",
+        "location": "Lô 2-6, Khu chức năng số 2a, KĐT mới Thủ Thiêm, TP Thủ Đức, TP Hồ Chí Minh",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn thiết kế cơ sở, thiết kế kỹ thuật, thiết kế thi công; Phối hợp mô hình, kiểm tra va chạm; Diễn họa thi công; Xuất khối lượng chính từ mô hình; Xuất bản vẽ từ mô hình, Đệ trình hồ sơ BIM lên Bộ Xây Dựng",
+        "description": "Diện tích: 159.241 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Lotte Eco Smart city Thủ Thiêm số 2-4",
+        "client": "Công ty TNHH Lotte Properties HCMC",
+        "location": "Lô 2-4, Khu chức năng số 2a, Khu đô thị mới Thủ Thiêm, Thành phố Thủ Đức, Thành phố Hồ Chí Minh",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn thiết kế kỹ thuật, thiết kế thi công; Phối hợp mô hình, kiểm tra va chạm; Diễn họa thi công; Xuất khối lượng chính từ mô hình; Xuất bản vẽ từ mô hình, Đệ trình hồ sơ BIM lên Bộ Xây Dựng",
+        "description": "Diện tích: 44.800 m2",
+        "completion_date": "2024-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Bệnh viện Bãi Cháy",
+        "client": "Công ty Cổ phần Địa ốc Dầu khí Viễn thông",
+        "location": "Phường Giếng Đáy, Thành phố Hạ Long, Tỉnh Quảng Ninh",
+        "scope_of_work": "Dựng mô hình thông tin công trình giai đoạn thiết kế cơ sở, thiết kế kỹ thuật, thiết kế thi công; Diễn họa thi công; Video Marketing; Phối hợp mô hình, kiểm tra va chạm; Xuất khối lượng chính từ mô hình",
+        "description": "Diện tích: 9460 m2",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Bệnh viện tim Hà Nội (cơ sở 2)",
+        "client": "Ban QLDA ĐTXD công trình dân dụng Thành phố Hà Nội",
+        "location": "Đường Võ Chí Công, P. Xuân La, Tây Hồ Hà Nội",
+        "scope_of_work": "Tạo lập mô hình BIM 3D; Kiểm soát thiết kế; Phối hợp mô hình BIM thiết kế; Video diễn họa Dự án; Bóc tách khối lượng chính; Trích xuất bản vẽ chính",
+        "description": "Diện tích: 47.960 m2",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Trung tâm Pháp y Hà Nội",
+        "client": "Ban QLDA ĐTXD công trình dân dụng Thành phố Hà Nội",
+        "location": "35 Phố Trần Bình, P. Mai Dịch, Q. Cầu Giấy, TP Hà Nội",
+        "scope_of_work": "Tạo lập mô hình BIM 3D; Kiểm soát thiết kế; Phối hợp mô hình BIM thiết kế; Video diễn họa Dự án; Bóc tách khối lượng chính; Trích xuất bản vẽ chính",
+        "description": "Diện tích: 5270 m2",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Cung thiếu nhi TP Hồ Chí Minh",
+        "client": "Ban QLDA ĐTXD các công trình dân dụng và Công nghiệp",
+        "location": "Lô 5-2, Khu chức năng số 5, KĐT mới Thủ Thiêm, Q.2, TP HCM",
+        "scope_of_work": "Tạo lập mô hình BIM 3D; Kiểm soát thiết kế; Phối hợp mô hình BIM thiết kế; Video diễn họa Dự án; Bóc tách khối lượng chính; Trích xuất bản vẽ chính",
+        "description": "Diện tích: 11.606 m2",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Dự án Nhà ở xã hội Hà Nội",
+        "client": "Liên danh UDIC - HAWEICCO - DAC",
+        "location": "Ô đất N01 - KĐT mới Hạ Đình, Xã Tân Triều, Thanh Trì, Hà Nội",
+        "scope_of_work": "Tạo lập mô hình BIM 3D; Kiểm soát thiết kế; Phối hợp mô hình BIM thiết kế; Bóc tách khối lượng chính; Trích xuất bản vẽ chính",
+        "description": "Diện tích: 71.760 m2",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    },
+    {
+        "title": "Khu lưu trữ TP Đà Nẵng",
+        "client": "BQLDA Đầu tư xây dựng các Công trình dân dụng TP. Đà Nẵng",
+        "location": "P. Hòa Thọ Tây, Q. Cẩm Lệ, TP. Đà Nẵng",
+        "scope_of_work": "Dựng mô hình giai đoạn thiết kế cơ sở; Nộp Hồ sơ BIM trình thẩm tra (mô hình, bản vẽ, khối lượng); Kiểm tra va chạm",
+        "description": "Diện tích: 1180 m2",
+        "completion_date": "2025-01-01",
+        "status": "published",
+        "service_type": "BIM Services"
+    }
+]

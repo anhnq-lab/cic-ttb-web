@@ -1,0 +1,210 @@
+import React, { useState } from 'react';
+import { NAV_ITEMS } from '../constants';
+import Button from './Button';
+
+interface User {
+  name: string;
+  email: string;
+  role?: string;
+}
+
+interface NavbarProps {
+  onLogin?: () => void;
+  onLogout?: () => void;
+  onContact?: () => void;
+  onSearch?: (query: string) => void;
+  user?: User | null;
+}
+
+import { useNavigate, useLocation } from 'react-router-dom';
+
+const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, onContact, onSearch, user }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    // Handle generic links or #
+    if (href === '#' || href === '/') {
+      if (location.pathname !== '/') {
+        navigate('/');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    // Handle Anchor Links (#section)
+    if (href.startsWith('#')) {
+      const scrollToElement = () => {
+        const element = document.querySelector(href);
+        if (element) {
+          const offset = 90;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      };
+
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for home page to mount
+        setTimeout(scrollToElement, 500);
+      } else {
+        scrollToElement();
+      }
+      return;
+    }
+
+    // Handle Routes (/path)
+    if (href.startsWith('/')) {
+      // If href is /#library (legacy fix), treat as #library
+      if (href.startsWith('/#')) {
+        const hash = href.substring(1);
+        handleNavClick(e, hash);
+        return;
+      }
+      navigate(href);
+      return;
+    }
+  };
+
+  const handleSearchSubmit = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onSearch?.(searchQuery);
+    }
+  };
+
+  return (
+    <nav className="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-gray-100 shadow-sm transition-all duration-300">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex items-center justify-between h-20">
+          {/* Brand Logo - Simple & Professional */}
+          <a href="#" onClick={(e) => handleNavClick(e, '#')} className="flex items-center gap-3 group">
+            <div className="flex flex-col items-start">
+              <span className="text-lg font-extrabold uppercase tracking-tighter leading-none flex items-center gap-1" style={{ fontFamily: '"Montserrat", sans-serif' }}>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">CIC</span>
+                <span className="text-gray-400">-</span>
+                <span className="text-brand-orange">DIGITAL TWIN</span>
+              </span>
+              <span className="text-[11px] text-brand-darkBlue font-bold italic tracking-wide hidden md:block mt-0.5">Chia sẻ - Kết nối - Kiến tạo tương lai</span>
+              <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider md:hidden">Cổng thông tin Pháp lý</span>
+            </div>
+          </a>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex space-x-8">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="text-gray-600 hover:text-brand-blue font-medium transition-colors text-sm py-2 border-b-2 border-transparent hover:border-brand-blue"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right Side */}
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="relative group">
+              <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 group-focus-within:text-brand-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              <input
+                type="text"
+                placeholder="Tìm kiếm văn bản, quy trình..."
+                className="pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:bg-white w-64 transition-all"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearchSubmit}
+              />
+            </div>
+
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <div className="text-right hidden lg:block">
+                  <div className="text-sm font-bold text-gray-900">{user.name}</div>
+                  <div className="text-xs text-gray-500">{user.role === 'admin' ? 'Quản trị viên' : 'Thành viên'}</div>
+                </div>
+                <div className="relative group cursor-pointer">
+                  <div className="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  {/* Dropdown User Menu */}
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform z-50 border border-gray-100">
+                    {user.role === 'admin' && (
+                      <>
+                        <a href="#/admin" onClick={(e) => { e.preventDefault(); navigate('/admin'); }} className="block px-4 py-2 text-sm text-blue-600 font-bold hover:bg-gray-100">⚙ Trang Quản trị</a>
+                        <div className="border-t border-gray-100 my-1"></div>
+                      </>
+                    )}
+                    <a href="#" onClick={(e) => { e.preventDefault(); alert('Tính năng Hồ sơ cá nhân đang được phát triển!'); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hồ sơ cá nhân</a>
+                    <a href="#" onClick={(e) => { e.preventDefault(); alert('Tính năng Dự án của tôi đang được phát triển!'); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dự án của tôi</a>
+                    <div className="border-t border-gray-100 my-1"></div>
+                    <button onClick={onLogout} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50">Đăng xuất</button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Button variant="secondary" size="sm" onClick={onLogin}>Đăng nhập</Button>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden text-gray-600 p-2 rounded-md hover:bg-gray-100"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-100 animate-fade-in-down">
+            <div className="flex flex-col space-y-4">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="text-gray-600 hover:text-brand-blue font-medium px-2 py-1 rounded hover:bg-gray-50"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="pt-4 border-t border-gray-100">
+                {user ? (
+                  <div className="flex flex-col space-y-2">
+                    <div className="font-bold text-gray-900 px-2">{user.name}</div>
+                    {/* Admin Link Check for Mobile */}
+                    {(user && user.role === 'admin') && (
+                      <a href="#/admin" onClick={(e) => { e.preventDefault(); navigate('/admin'); setMobileMenuOpen(false); }} className="text-left text-gray-700 font-medium px-2 py-1 rounded hover:bg-gray-50">Trang quản trị</a>
+                    )}
+                    <button onClick={onLogout} className="text-left text-red-600 font-medium px-2 py-1 rounded hover:bg-gray-50">Đăng xuất</button>
+                  </div>
+                ) : (
+                  <Button variant="secondary" className="w-full" onClick={onLogin}>Đăng nhập</Button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
