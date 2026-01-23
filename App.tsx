@@ -45,7 +45,9 @@ const NewsDetail = lazy(() => import('./components/NewsDetail'));
 const CICPlatformPage = lazy(() => import('./pages/CICPlatformPage'));
 const TrainingList = lazy(() => import('./pages/training/TrainingList'));
 const TrainingDetail = lazy(() => import('./pages/training/TrainingDetail'));
+
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
 
 import { saveUTMParams } from './services/utm';
 import './index.css';
@@ -242,6 +244,7 @@ function App() {
                 <Routes>
                   {/* Public Routes with Layout */}
                   <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
+                  <Route path="/ve-chung-toi" element={<MainLayout><AboutPage /></MainLayout>} />
                   <Route path="/cic-platform" element={<MainLayout><CICPlatformPage /></MainLayout>} />
                   <Route path="/news/:id" element={<MainLayout><NewsDetail /></MainLayout>} />
                   <Route path="/dao-tao" element={<MainLayout><TrainingList /></MainLayout>} />

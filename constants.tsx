@@ -3,6 +3,7 @@ import { NavItem, NewsItem, RoleCard, Testimonial, ProductFeature, PricingPlan, 
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Trang chủ', href: '/' },
+  { label: 'Về chúng tôi', href: '/ve-chung-toi' },
   { label: 'Giải pháp & Bảng giá', href: '#products' },
   { label: 'Đào tạo', href: '/dao-tao' },
   { label: 'Dự án', href: '/du-an' },

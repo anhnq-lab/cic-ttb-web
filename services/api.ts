@@ -294,8 +294,16 @@ export const api = {
         return userStr ? JSON.parse(userStr) : null;
     },
     // ===== TRACKING =====
+    // ===== TRACKING =====
     trackView: async (path: string) => {
-        console.log(`Tracking view: ${path}`);
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'page_view', {
+                page_path: path
+            });
+            console.log(`[GA4] Tracked view: ${path}`);
+        } else {
+            console.log(`[Dev] Tracking view: ${path}`);
+        }
         return Promise.resolve();
     },
 

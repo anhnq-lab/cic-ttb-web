@@ -4,42 +4,120 @@
     <loc>https://cic-bim-hub.vn/</loc>
     <priority>1</priority>
     <changefreq>daily</changefreq>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <url>
     <loc>https://cic-bim-hub.vn/cic-platform</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <url>
     <loc>https://cic-bim-hub.vn/dao-tao</loc>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <url>
     <loc>https://cic-bim-hub.vn/du-an</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
+    <lastmod>2026-01-23</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/news/a4095b54-92e0-466c-a4e5-b9e76fd0018f</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-23T03:10:43.458692+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/news/d783931a-8022-4573-a481-ab2604f1dfe1</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-23T03:10:43.458692+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/news/54fa58aa-058e-4f74-9354-4de6fecec144</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-23T03:10:43.458692+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/news/a6f1ee00-b27d-4820-858a-3f1d631a07dd</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-23T03:10:43.458692+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/news/caf8fd85-c50f-4081-945d-5f5dbfbfc02e</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-23T03:10:43.458692+00:00</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/bim-overview</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/cde-setup</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/bim-coordination</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/iso-19650-master</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/revit-architecture-co-ban-chuyen-nghiep</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
     <lastmod>2026-01-22</lastmod>
   </url>
   <url>
-    <loc>https://cic-bim-hub.vn/news/1</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
+    <loc>https://cic-bim-hub.vn/dao-tao/revit-structure-ket-cau-bim</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
     <lastmod>2026-01-22</lastmod>
   </url>
   <url>
-    <loc>https://cic-bim-hub.vn/news/2</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
+    <loc>https://cic-bim-hub.vn/dao-tao/revit-mep-he-thong-me</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
     <lastmod>2026-01-22</lastmod>
   </url>
   <url>
-    <loc>https://cic-bim-hub.vn/news/3</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
+    <loc>https://cic-bim-hub.vn/dao-tao/navisworks-quan-ly-va-cham-4d</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-22</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/bim-360-acc-cloud-cde</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-22</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/dynamo-revit-lap-trinh-tu-dong-hoa</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-22</lastmod>
+  </url>
+  <url>
+    <loc>https://cic-bim-hub.vn/dao-tao/bim-fundamentals-iso-19650</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
     <lastmod>2026-01-22</lastmod>
   </url>
 </urlset>

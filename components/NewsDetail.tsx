@@ -98,6 +98,11 @@ const NewsDetail: React.FC = () => {
                     image={news.imageUrl}
                     url={window.location.href}
                     type="article"
+                    articleData={{
+                        author: news.author,
+                        publishedTime: news.date, // Best effort date
+                        section: news.category
+                    }}
                 />
             )}
 

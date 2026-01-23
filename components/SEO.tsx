@@ -15,6 +15,25 @@ interface SEOProps {
         modifiedTime?: string;
         section?: string;
     };
+    // For Training/Course pages
+    courseData?: {
+        name: string;
+        description: string;
+        provider: string; // CIC
+        price?: number;
+        currency?: string;
+    };
+    // For Product pages
+    productData?: {
+        name: string;
+        description: string;
+        image: string;
+        brand: string;
+        offers?: {
+            price: string;
+            currency: string;
+        };
+    };
 }
 
 const SITE_URL = 'https://cic-bim-hub.vn';
@@ -30,6 +49,8 @@ const SEO: React.FC<SEOProps> = ({
     url,
     type = 'website',
     articleData,
+    courseData,
+    productData,
 }) => {
     const metaTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
     const metaDescription = description || DEFAULT_DESCRIPTION;
@@ -98,6 +119,43 @@ const SEO: React.FC<SEOProps> = ({
             '@type': 'WebPage',
             '@id': metaUrl,
         },
+    } : null;
+
+    // Course Schema
+    const courseSchema = courseData ? {
+        '@context': 'https://schema.org',
+        '@type': 'Course',
+        name: courseData.name,
+        description: courseData.description,
+        provider: {
+            '@type': 'Organization',
+            name: courseData.provider,
+            sameAs: SITE_URL
+        },
+        offers: courseData.price ? {
+            '@type': 'Offer',
+            category: 'Paid',
+            price: courseData.price,
+            priceCurrency: courseData.currency || 'VND'
+        } : undefined
+    } : null;
+
+    // Product Schema
+    const productSchema = productData ? {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: productData.name,
+        image: productData.image,
+        description: productData.description,
+        brand: {
+            '@type': 'Brand',
+            name: productData.brand
+        },
+        offers: productData.offers ? {
+            '@type': 'Offer',
+            price: productData.offers.price,
+            priceCurrency: productData.offers.currency
+        } : undefined
     } : null;
 
     // BreadcrumbList Schema
@@ -172,6 +230,16 @@ const SEO: React.FC<SEOProps> = ({
             {articleSchema && (
                 <script type="application/ld+json">
                     {JSON.stringify(articleSchema)}
+                </script>
+            )}
+            {courseSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(courseSchema)}
+                </script>
+            )}
+            {productSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(productSchema)}
                 </script>
             )}
         </Helmet>
