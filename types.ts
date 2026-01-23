@@ -11,6 +11,7 @@ export interface NewsItem {
   title: string;
   date: string;
   imageUrl: string;
+  altText?: string;
   excerpt?: string;
   content?: string;
   author?: string;
@@ -47,6 +48,7 @@ export interface Testimonial {
   role: string;
   company: string;
   avatar: string;
+  altText?: string;
   stars: number;
 }
 

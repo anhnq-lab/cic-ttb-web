@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { NEWS_ITEMS } from '../constants'; // Fallback if API fails, or remove
 import { api } from '../services/api';
 import { NewsItem } from '../types';
+import { LazyImage } from './shared/LazyImage';
 
 const NewsSection: React.FC = () => {
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
@@ -72,7 +73,11 @@ const NewsSection: React.FC = () => {
               newsItems.map((item) => (
                 <Link to={`/news/${item.id}`} key={item.id} className="flex gap-4 bg-gray-50 p-4 rounded-xl hover:bg-gray-100 transition-colors group cursor-pointer border border-transparent hover:border-gray-200">
                   <div className="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden">
-                    <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                    <LazyImage
+                      src={item.imageUrl}
+                      alt={item.altText || item.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
                   </div>
                   <div className="flex-1">
                     <span className={`text-xs font-bold px-2 py-0.5 rounded mb-2 inline-block ${item.category === 'Thông tư' ? 'bg-green-100 text-green-700' :

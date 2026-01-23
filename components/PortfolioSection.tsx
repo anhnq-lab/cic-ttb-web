@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import ProjectDetailModal from './ProjectDetailModal';
+import { LazyImage } from './shared/LazyImage';
 
 const PortfolioSection: React.FC = () => {
     const [projects, setProjects] = useState<any[]>([]);
@@ -102,9 +103,9 @@ const PortfolioSection: React.FC = () => {
                                 <div className="relative h-full bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(0,212,255,0.15)] hover:-translate-y-2">
                                     {/* Image Container */}
                                     <div className="relative h-56 overflow-hidden">
-                                        <img
+                                        <LazyImage
                                             src={project.images && project.images[0] ? project.images[0] : 'https://via.placeholder.com/600x400?text=Project'}
-                                            alt={project.title}
+                                            alt={`Dự án ${project.title} - ${project.service_type}`}
                                             className="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700"
                                         />
                                         {/* Gradient Overlay */}

@@ -19,6 +19,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     title: 'Nghị định 175/2024/NĐ-CP: Quy định chi tiết và biện pháp thi hành Luật Xây dựng',
     date: '30/12/2024',
     imageUrl: 'https://picsum.photos/400/300?random=1',
+    altText: 'Văn bản Nghị định 175/2024 về quy định chi tiết Luật Xây dựng và lộ trình áp dụng BIM',
     excerpt: 'Cập nhật quan trọng về phân loại dự án, thẩm định Báo cáo NCTKT và lộ trình áp dụng BIM.'
   },
   {
@@ -27,6 +28,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     title: 'Nghị định 111/2024/NĐ-CP: Quy định về Hợp đồng xây dựng và Quản lý chi phí',
     date: '30/12/2024',
     imageUrl: 'https://picsum.photos/400/300?random=2',
+    altText: 'Nghị định 111/2024 về Hợp đồng xây dựng FIDIC và quản lý định mức chi phí',
     excerpt: 'Hướng dẫn mới về hợp đồng FIDIC, điều chỉnh giá và quản lý định mức xây dựng.'
   },
   {
@@ -35,6 +37,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     title: 'Digital Twin: Bước tiến mới trong quản lý vận hành tòa nhà thông minh',
     date: '28/08/2024',
     imageUrl: 'https://picsum.photos/400/300?random=3',
+    altText: 'Mô hình Digital Twin cho tòa nhà thông minh với công nghệ IoT và BIM',
     excerpt: 'Ứng dụng Digital Twin giúp tối ưu hóa năng lượng và chi phí vận hành.'
   }
 ];
@@ -118,6 +121,7 @@ export const TESTIMONIALS: Testimonial[] = [
     role: "Giám đốc dự án",
     company: "Vinaconex",
     avatar: "https://i.pravatar.cc/150?u=1",
+    altText: "Ảnh đại diện Nguyễn Văn A - Giám đốc dự án Vinaconex",
     stars: 5
   },
   {
@@ -127,6 +131,7 @@ export const TESTIMONIALS: Testimonial[] = [
     role: "Trưởng phòng BIM",
     company: "Cotecons",
     avatar: "https://i.pravatar.cc/150?u=2",
+    altText: "Ảnh đại diện Lê Thị B - Trưởng phòng BIM Cotecons",
     stars: 5
   },
   {
@@ -136,6 +141,7 @@ export const TESTIMONIALS: Testimonial[] = [
     role: "CEO",
     company: "ABC Construction",
     avatar: "https://i.pravatar.cc/150?u=3",
+    altText: "Ảnh đại diện Trần Văn C - CEO ABC Construction",
     stars: 5
   }
 ];

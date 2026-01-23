@@ -6,6 +6,7 @@ import { NewsItem } from '../types';
 import SEO from './SEO';
 import SocialShare from './SocialShare';
 import { formatArticleContent, calculateReadingTime } from '../services/contentFormatter';
+import { LazyImage } from './shared/LazyImage';
 import './ArticleContent.css';
 
 const NewsDetail: React.FC = () => {
@@ -157,7 +158,11 @@ const NewsDetail: React.FC = () => {
 
                     {news.imageUrl && (
                         <div className="w-full h-[400px] md:h-[500px] relative">
-                            <img src={news.imageUrl} alt={news.title} className="w-full h-full object-cover" />
+                            <LazyImage
+                                src={news.imageUrl}
+                                alt={news.altText || news.title}
+                                className="w-full h-full object-cover"
+                            />
                         </div>
                     )}
 
@@ -181,7 +186,11 @@ const NewsDetail: React.FC = () => {
                             {relatedNews.map((item) => (
                                 <Link to={`/news/${item.id}`} key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl transition-all hover:-translate-y-1">
                                     <div className="h-48 overflow-hidden relative">
-                                        <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <LazyImage
+                                            src={item.imageUrl}
+                                            alt={item.altText || item.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
                                         <div className="absolute top-2 left-2 bg-brand-darkBlue/80 backdrop-blur text-white text-[9px] font-black px-2 py-1 rounded uppercase tracking-widest">
                                             {item.category}
                                         </div>

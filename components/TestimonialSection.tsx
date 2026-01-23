@@ -1,5 +1,6 @@
 import React from 'react';
 import { TESTIMONIALS } from '../constants';
+import { LazyImage } from './shared/LazyImage';
 
 const TestimonialSection: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const TestimonialSection: React.FC = () => {
             <div key={testimonial.id} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow relative">
               {/* Quote Icon */}
               <div className="absolute top-6 right-8 text-gray-200">
-                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.096 14.017 14.742 16.292 12.291L18.995 9.074L15.908 9.074L15.908 4L22 4L22 10.966L18.598 15.035C16.891 16.716 16.923 17.512 16.923 21L14.017 21ZM5.016 21L5.016 18C5.016 16.096 5.016 14.742 7.291 12.291L9.995 9.074L6.908 9.074L6.908 4L12.999 4L12.999 10.966L9.598 15.035C7.891 16.716 7.923 17.512 7.923 21L5.016 21Z" /></svg>
+                <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.096 14.017 14.742 16.292 12.291L18.995 9.074L15.908 9.074L15.908 4L22 4L22 10.966L18.598 15.035C16.891 16.716 16.923 17.512 16.923 21L14.017 21ZM5.016 21L5.016 18C5.016 16.096 5.016 14.742 7.291 12.291L9.995 9.074L6.908 9.074L6.908 4L12.999 4L12.999 10.966L9.598 15.035C7.891 16.716 7.923 17.512 7.923 21L5.016 21Z" /></svg>
               </div>
 
               <div className="flex space-x-1 mb-6">
@@ -29,7 +30,11 @@ const TestimonialSection: React.FC = () => {
               </p>
 
               <div className="flex items-center mt-auto border-t border-gray-100 pt-6">
-                <img src={testimonial.avatar} alt={testimonial.author} className="w-12 h-12 rounded-full mr-4 object-cover" />
+                <LazyImage
+                  src={testimonial.avatar}
+                  alt={testimonial.altText || `Ảnh đại diện ${testimonial.author}`}
+                  className="w-12 h-12 rounded-full mr-4 object-cover"
+                />
                 <div>
                   <h4 className="font-bold text-gray-900 text-sm">{testimonial.author}</h4>
                   <p className="text-xs text-gray-500">{testimonial.role}, {testimonial.company}</p>
