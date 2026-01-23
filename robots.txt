@@ -1,19 +1,15 @@
+# Robots.txt for CIC BIM Hub Vietnam
+# https://cic-bim-hub.vn
+
+# Allow all crawlers
 User-agent: *
 Allow: /
 
-# Disallow admin and API routes
+# Disallow admin area
 Disallow: /admin
-Disallow: /api/
 
 # Sitemap location
 Sitemap: https://cic-bim-hub.vn/sitemap.xml
 
-# Crawl delay (optional, be careful with this)
-# Crawl-delay: 1
-
-# Allow important resources
-Allow: /*.js
-Allow: /*.css
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.svg
+# Crawl delay (1 second between requests)
+Crawl-delay: 1
