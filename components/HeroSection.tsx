@@ -29,7 +29,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onStartAssessment }) => {
         </div>
 
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
-          Chinh phục lộ trình <span className="text-brand-orange">BIM 2026</span> <br className="hidden md:block" />
+          Chinh phục lộ trình <span className="text-brand-orange">CĐS Ngành Xây dựng</span> <br className="hidden md:block" />
           cùng <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">CIC Platform</span>
         </h1>
 
