@@ -7,7 +7,18 @@ const getAllNews = async (req, res) => {
         .order('created_at', { ascending: false });
 
     if (error) return res.status(500).json({ error: error.message });
-    res.json(data);
+
+    // Map snake_case to camelCase
+    const mappedData = data.map(item => ({
+        ...item,
+        imageUrl: item.image_url,
+        videoUrl: item.video_url,
+        audioUrl: item.audio_url,
+        metaTitle: item.meta_title,
+        metaDescription: item.meta_description
+    }));
+
+    res.json(mappedData);
 };
 
 const getNewsById = async (req, res) => {
@@ -19,7 +30,18 @@ const getNewsById = async (req, res) => {
 
     if (error) return res.status(500).json({ error: error.message });
     if (!data) return res.status(404).json({ error: "News not found" });
-    res.json(data);
+
+    // Map snake_case to camelCase
+    const mappedItem = {
+        ...data,
+        imageUrl: data.image_url,
+        videoUrl: data.video_url,
+        audioUrl: data.audio_url,
+        metaTitle: data.meta_title,
+        metaDescription: data.meta_description
+    };
+
+    res.json(mappedItem);
 };
 
 const getRelatedNews = async (req, res) => {
@@ -31,7 +53,16 @@ const getRelatedNews = async (req, res) => {
         .limit(3);
 
     if (error) return res.status(500).json({ error: error.message });
-    res.json(data || []);
+    const mappedData = (data || []).map(item => ({
+        ...item,
+        imageUrl: item.image_url,
+        videoUrl: item.video_url,
+        audioUrl: item.audio_url,
+        metaTitle: item.meta_title,
+        metaDescription: item.meta_description
+    }));
+
+    res.json(mappedData);
 };
 
 const createNews = async (req, res) => {

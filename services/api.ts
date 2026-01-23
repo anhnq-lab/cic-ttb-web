@@ -129,7 +129,7 @@ const defaultPricingPackages = [
 // HTTP helper for real API calls
 const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
     // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'services/api.ts:130',message:'apiRequest called',data:{endpoint,apiBaseUrl:API_BASE_URL,method:options.method||'GET',hasToken:!!localStorage.getItem('authToken')},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'services/api.ts:130', message: 'apiRequest called', data: { endpoint, apiBaseUrl: API_BASE_URL, method: options.method || 'GET', hasToken: !!localStorage.getItem('authToken') }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
     // #endregion
     const token = localStorage.getItem('authToken');
     const headers = {
@@ -140,9 +140,9 @@ const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
 
     const fullUrl = `${API_BASE_URL}${endpoint}`;
     // #region agent log
-    const logDataB = {location:'services/api.ts:142',message:'Before fetch',data:{fullUrl,headers:Object.keys(headers)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'};
+    const logDataB = { location: 'services/api.ts:142', message: 'Before fetch', data: { fullUrl, headers: Object.keys(headers) }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'B' };
     console.log('[DEBUG] Hypothesis B:', logDataB);
-    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(logDataB)}).catch(()=>{});
+    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(logDataB) }).catch(() => { });
     // #endregion
 
     const response = await fetch(fullUrl, {
@@ -151,9 +151,9 @@ const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
     });
 
     // #region agent log
-    const logDataC = {location:'services/api.ts:150',message:'Response received',data:{status:response.status,statusText:response.statusText,ok:response.ok,contentType:response.headers.get('content-type')},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'};
+    const logDataC = { location: 'services/api.ts:150', message: 'Response received', data: { status: response.status, statusText: response.statusText, ok: response.ok, contentType: response.headers.get('content-type') }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'C' };
     console.log('[DEBUG] Hypothesis C:', logDataC);
-    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(logDataC)}).catch(()=>{});
+    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(logDataC) }).catch(() => { });
     // #endregion
 
     if (!response.ok) {
@@ -165,7 +165,7 @@ const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
             // Failed to parse JSON, try text
             const text = await response.text().catch(() => '');
             // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'services/api.ts:161',message:'Error response text',data:{text:text.substring(0,200),error:e},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'services/api.ts:161', message: 'Error response text', data: { text: text.substring(0, 200), error: e }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'D' }) }).catch(() => { });
             // #endregion
             if (text) errorMessage += ` | Response: ${text.substring(0, 100)}`;
         }
@@ -174,24 +174,24 @@ const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
 
     // #region agent log
     const responseText = await response.clone().text().catch(() => '');
-    const logDataE = {location:'services/api.ts:170',message:'Success response body',data:{textLength:responseText.length,textPreview:responseText.substring(0,200),isEmpty:responseText.trim()==='',isJson:responseText.trim().startsWith('{')||responseText.trim().startsWith('[')},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'};
+    const logDataE = { location: 'services/api.ts:170', message: 'Success response body', data: { textLength: responseText.length, textPreview: responseText.substring(0, 200), isEmpty: responseText.trim() === '', isJson: responseText.trim().startsWith('{') || responseText.trim().startsWith('[') }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'E' };
     console.log('[DEBUG] Hypothesis E:', logDataE);
-    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(logDataE)}).catch(()=>{});
+    fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(logDataE) }).catch(() => { });
     // #endregion
 
     try {
         const jsonData = await response.json();
         // #region agent log
-        const logDataF = {location:'services/api.ts:175',message:'JSON parsed successfully',data:{hasData:!!jsonData},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'};
+        const logDataF = { location: 'services/api.ts:175', message: 'JSON parsed successfully', data: { hasData: !!jsonData }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'F' };
         console.log('[DEBUG] Hypothesis F:', logDataF);
-        fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(logDataF)}).catch(()=>{});
+        fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(logDataF) }).catch(() => { });
         // #endregion
         return jsonData;
     } catch (e) {
         // #region agent log
-        const logDataG = {location:'services/api.ts:179',message:'JSON parse failed',data:{error:String(e),responseText:responseText.substring(0,200)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'G'};
+        const logDataG = { location: 'services/api.ts:179', message: 'JSON parse failed', data: { error: String(e), responseText: responseText.substring(0, 200) }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'G' };
         console.error('[DEBUG] Hypothesis G - JSON PARSE FAILED:', logDataG);
-        fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(logDataG)}).catch(()=>{});
+        fetch('http://127.0.0.1:7242/ingest/3bd652de-c938-4bbc-84f0-87f5dcaa2de6', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(logDataG) }).catch(() => { });
         // #endregion
         throw new Error(`Invalid JSON response: ${e}. Response: ${responseText.substring(0, 100)}`);
     }
@@ -236,7 +236,7 @@ export const api = {
                 throw error;
             }
         }
-        
+
         // Fallback for development without API
         if (credentials.username === 'admin' && credentials.password === 'admin123') {
             const user = { id: 1, username: 'admin', role: 'admin' };
@@ -378,7 +378,14 @@ export const api = {
                     .select('*')
                     .order('created_at', { ascending: false });
                 if (error) throw error;
-                return data || [];
+                return (data || []).map((item: any) => ({
+                    ...item,
+                    imageUrl: item.image_url || item.imageUrl, // Map snake_case to camelCase
+                    videoUrl: item.video_url || item.videoUrl,
+                    audioUrl: item.audio_url || item.audioUrl,
+                    metaTitle: item.meta_title || item.metaTitle,
+                    metaDescription: item.meta_description || item.metaDescription
+                }));
             } catch (error) {
                 console.error('[Supabase] Failed to fetch news:', error);
                 return [];
