@@ -23,7 +23,7 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ onConsultation }) => 
                     {SERVICES_DATA.map((service) => (
                         <div
                             key={service.id}
-                            className="bg-gray-50 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+                            className="bg-gray-50 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col h-full"
                         >
                             <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300 flex justify-center">
                                 {service.icon}
@@ -47,7 +47,7 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ onConsultation }) => 
 
                             <Button
                                 variant="primary"
-                                className="w-full justify-center"
+                                className="w-full justify-center mt-auto"
                                 onClick={() => onConsultation && onConsultation(service.title)}
                             >
                                 {service.ctaText}
